@@ -1,4 +1,5 @@
 *.o
 *.a
+*.swp
 a.out
 test.c
