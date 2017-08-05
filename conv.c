@@ -6,28 +6,25 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 14:38:39 by ygaude            #+#    #+#             */
-/*   Updated: 2017/07/31 05:40:08 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/05 02:31:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdint.h>
 #include "libft/libft.h"
 
 char	*addchar(char c, char **str)
 {
 	char	*buf;
 
+	c = (c < 10) ? c + '0' : c - 10 + 'a';
 	buf = ft_strnew(1);
 	buf[0] = c;
 	buf = ft_strappend(&buf, str, 'B');
 	return (buf);
 }
 
-char	ntoc(unsigned int n)
-{
-	return((n < 10) ? n + '0' : n - 10 + 'a');
-}
-
-char	*ullitoa(unsigned long long int n, unsigned int base)
+char	*uitoa(uintmax_t n, unsigned int base)
 {
 	char	*str;
 
@@ -38,19 +35,19 @@ char	*ullitoa(unsigned long long int n, unsigned int base)
 	{
 		while (n)
 		{
-			str = addchar(ntoc(n % base), &str);
+			str = addchar((char)(n % base), &str);
 			n /= base;
 		}
 	}
 	return (str);
 }
 
-char	*llitoa(long long int n, unsigned int base)
+char	*itoa(intmax_t n, unsigned int base)
 {
 	char	*str;
 	char	*tmp;
 
 	tmp = "-";
-	str = ullitoa((unsigned long long)((n < 0) ? -n : n), base);
+	str = uitoa((uintmax_t)((n < 0) ? -n : n), base);
 	return((n < 0) ? ft_strappend(&tmp, &str, 'S') : str);
 }
