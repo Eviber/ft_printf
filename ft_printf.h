@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/28 13:59:02 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/17 05:39:57 by ygaude           ###   ########.fr       */
+/*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
+/*   Updated: 2017/08/17 05:26:57 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include "libft/libft.h"
-#include "ft_printf.h"
+#define FLAG_# 1
+#define FLAG_- 2
+#define FLAG_+ 4
+#define FLAG_SPACE 8
+#define FLAG_0 16
 
-int		ft_printf(const char *format, ...)
+typedef struct	s_format
 {
-	va_list	args;
-	char	*res;
-	int		ret;
+	int			flags;
+	int			width;
+	int			precision;
+	char		length;
+	char		specifier;
+}				t_format;
 
-	va_start(args, format);
-	res = ft_parse_printf(format, &args);
-	return (ret);
-}
+int		ft_get_flags(char *str);
+int		ft_get_width(char *str, va_list *ap);
+int		ft_get_precision(char *str, va_list *ap);
+char	ft_get_length(char *str);
+char	ft_get_specifier(char *str);
