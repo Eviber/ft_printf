@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/19 13:45:45 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/19 13:51:01 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_format	ft_parse_flag(const char *str, va_list *ap)
 {
 }
 
-char	*ft_parse_printf(const char *str, va_list *ap)
+char	*ft_parse_flags(const char *str, va_list *ap)
 {
 	t_format	*flag;
 	int			count;
