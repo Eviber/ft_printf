@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/19 13:40:23 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/19 13:43:50 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 #define FLAG_SPACE 8
 #define FLAG_0 16
 
-typedef struct	s_format
+typedef struct	s_flag
 {
 	int			attributes;
 	int			width;
 	int			precision;
 	char		length;
 	char		specifier;
-}				t_format;
+}				t_flag;
 
 int		ft_get_attributes(char *str);
 int		ft_get_width(char *str, va_list *ap);
