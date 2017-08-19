@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/17 05:17:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/19 13:41:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 
-int		ft_get_flags(char *str)
+int		ft_get_attributes(char *str)
 {
 	int		ret;
 

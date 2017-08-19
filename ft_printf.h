@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/17 05:26:57 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/19 13:40:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 
 typedef struct	s_format
 {
-	int			flags;
+	int			attributes;
 	int			width;
 	int			precision;
 	char		length;
 	char		specifier;
 }				t_format;
 
-int		ft_get_flags(char *str);
+int		ft_get_attributes(char *str);
 int		ft_get_width(char *str, va_list *ap);
 int		ft_get_precision(char *str, va_list *ap);
 char	ft_get_length(char *str);
