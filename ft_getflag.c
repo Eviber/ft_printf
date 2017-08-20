@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 13:29:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/20 14:44:21 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 
-int		ft_get_attributes(char *str)
+int		ft_get_attributes(const char *str)
 {
 	int		ret;
 
@@ -31,7 +31,7 @@ int		ft_get_attributes(char *str)
 	return (ret);
 }
 
-int		ft_get_width(char *str, va_list *ap)
+int		ft_get_width(const char *str, va_list *ap)
 {
 	if (ft_isdigit(*str))
 		return (ft_atoi(str));
@@ -40,7 +40,7 @@ int		ft_get_width(char *str, va_list *ap)
 	return (0);
 }
 
-int		ft_get_precision(char *str, va_list *ap)
+int		ft_get_precision(const char *str, va_list *ap)
 {
 	if (*str == '.')
 	{
@@ -53,7 +53,7 @@ int		ft_get_precision(char *str, va_list *ap)
 	return (-1);
 }
 
-char	ft_get_length(char *str)
+char	ft_get_length(const char *str)
 {
 	char	*c;
 
@@ -68,7 +68,7 @@ char	ft_get_length(char *str)
 	return (0);
 }
 
-char	ft_get_specifier(char *str)
+char	ft_get_specifier(const char *str)
 {
 	char	*c;
 
