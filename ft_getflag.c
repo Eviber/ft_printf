@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 13:16:08 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/20 13:29:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		ft_get_width(char *str, va_list *ap)
 {
 	if (ft_isdigit(*str))
 		return (ft_atoi(str));
-	if (*str = '*')
+	if (*str == '*')
 		return (va_arg(*ap, int));
 	return (0);
 }
@@ -57,12 +57,15 @@ char	ft_get_length(char *str)
 {
 	char	*c;
 
+	while (*str && ft_strchr("hljztL", *str))
+		str++;
 	if (ft_strnequ(str, "hh", 2))
 		return ('h' + 'h');
 	if (ft_strnequ(str, "ll", 2))
 		return ('l' + 'l');
-	if ((c = ft_strchr("hljztL")))
+	if ((c = ft_strchr("hljztL", *str)))
 		return (*c);
+	return (0);
 }
 
 char	ft_get_specifier(char *str)
