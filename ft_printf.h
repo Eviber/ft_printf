@@ -6,15 +6,15 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/19 13:43:50 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/20 13:15:02 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define FLAG_# 1
-#define FLAG_- 2
-#define FLAG_+ 4
-#define FLAG_SPACE 8
-#define FLAG_0 16
+#define SHARP 1
+#define MINUS 2
+#define PLUS 4
+#define SPACE 8
+#define ZERO 16
 
 typedef struct	s_flag
 {

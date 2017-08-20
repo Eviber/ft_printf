@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/19 13:41:02 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/20 13:16:08 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int		ft_get_attributes(char *str)
 
 	ret = 0;
 	if (ft_strchr(str, '#'))
-		ret = ret | FLAG_#;
+		ret = ret | SHARP;
 	if (ft_strchr(str, '-'))
-		ret = ret | FLAG_-;
+		ret = ret | MINUS;
 	if (ft_strchr(str, '+'))
-		ret = ret | FLAG_+;
+		ret = ret | PLUS;
 	if (ft_strchr(str, ' '))
-		ret = ret | FLAG_SPACE;
+		ret = ret | SPACE;
 	return (ret);
 }
 
