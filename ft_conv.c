@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 14:38:39 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/05 02:31:26 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/20 14:49:35 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,5 @@ char	*itoa(intmax_t n, unsigned int base)
 
 	tmp = "-";
 	str = uitoa((uintmax_t)((n < 0) ? -n : n), base);
-	return((n < 0) ? ft_strappend(&tmp, &str, 'S') : str);
+	return ((n < 0) ? ft_strappend(&tmp, &str, 'S') : str);
 }
