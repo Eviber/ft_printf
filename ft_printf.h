@@ -6,12 +6,15 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 14:04:23 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 17:23:07 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
+
+#include <stdarg.h>
+#include <stdint.h>
 
 # define SHARP 1
 # define MINUS 2
@@ -36,5 +39,13 @@ char			ft_get_length(const char *str);
 char			ft_get_specifier(const char *str);
 
 int				ft_parse_flags(const char *str, va_list *ap, t_flag **flag);
+
+char			*ft_conv(const char *format, t_flag *flags);
+
+char	*ft_addchar(char c, char **str);
+char	*ft_uimaxtoa(uintmax_t n, unsigned int base);
+char	*ft_imaxtoa(intmax_t n, unsigned int base);
+
+int		ft_printf(const char *format, ...);
 
 #endif

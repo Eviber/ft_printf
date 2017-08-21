@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 13:59:02 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 14:33:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 17:05:21 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int		ft_printf(const char *format, ...)
 	ret = ft_parse_flags(format, &args, &flags);
 	if (!flags)
 		return (-1);
+	res = ft_conv(format, flags);
 	ret = ft_strlen(res);
 	ft_putstr(res);
 	return (ret);

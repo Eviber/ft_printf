@@ -5,20 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/21 14:16:17 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 14:36:09 by ygaude           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_parse.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 14:16:06 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 18:23:13 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +27,7 @@ char	*ft_sub_flag(const char *str)
 	start = i++;
 	while (str[i] && !ft_strchr("sSpdDioOuUxXcC%", str[i]))
 		i++;
-	return ((str[i]) ? ft_strsub(str, start, i - start) : NULL);
+	return ((str[i]) ? ft_strsub(str, start + 1, i - start) : NULL);
 }
 
 int		ft_count_flag(const char *str)
@@ -53,10 +41,10 @@ int		ft_count_flag(const char *str)
 	{
 		while (str[i] && str[i] != '%')
 			i++;
-		i += (str[i]);
+		i += (str[i] != 0);
 		while (str[i] && !ft_strchr("sSpdDioOuUxXcC%", str[i]))
 			i++;
-		count += (str[i]);
+		count += (str[i] != 0);
 	}
 	return (count);
 }
