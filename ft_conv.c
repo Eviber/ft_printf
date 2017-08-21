@@ -1,53 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conv.c                                             :+:      :+:    :+:   */
+/*   ft_conv.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/07/28 14:38:39 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 11:02:00 by ygaude           ###   ########.fr       */
+/*   Created: 2017/08/21 12:10:44 by ygaude            #+#    #+#             */
+/*   Updated: 2017/08/21 16:00:57 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include "libft/libft.h"
+#include "ft_printf.h"
 
-char	*ft_addchar(char c, char **str)
-{
-	char	*buf;
-
-	c = (c < 10) ? c + '0' : c - 10 + 'a';
-	buf = ft_strnew(1);
-	buf[0] = c;
-	buf = ft_strappend(&buf, str, 'B');
-	return (buf);
-}
-
-char	*ft_uimaxtoa(uintmax_t n, unsigned int base)
+char	*ft_conv_flag(t_flag flag)
 {
 	char	*str;
 
-	str = NULL;
-	if (!n)
-		str = ft_addchar('0', &str);
-	else
-	{
-		while (n)
-		{
-			str = ft_addchar((char)(n % base), &str);
-			n /= base;
-		}
-	}
+	str = ft_strdup(&(flag.specifier));
 	return (str);
 }
 
-char	*ft_imaxtoa(intmax_t n, unsigned int base)
+char	*ft_conv_next(const char *format, size_t *i, t_flag *flags)
 {
+	static int	iflag = 0;
+	size_t		len;
+	char		*str;
+	char		*tmp;
+
+	if (format[*i] != '%')
+	{
+		tmp = ft_strchr(format + *i, '%');
+		len = (tmp) ? format + *i - tmp : ft_strlen(format) - *i;
+		str = ft_strsub(format, *i, len);
+		*i += len;
+	}
+	else
+		str = ft_conv_flag(flags[iflag++]);
+	return (str);
+}
+
+char	*ft_conv(const char *format, t_flag *flags)
+{
+	size_t	i;
 	char	*str;
 	char	*tmp;
 
-	tmp = "-";
-	str = ft_uimaxtoa((uintmax_t)((n < 0) ? -n : n), base);
-	return ((n < 0) ? ft_strappend(&tmp, &str, 'S') : str);
+	while (format[i])
+	{
+		tmp = ft_conv_next(format, &i, flags);
+		ft_strappend(&str, &tmp, 'S');
+	}
+	return (str);
 }
