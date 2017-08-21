@@ -6,14 +6,14 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/28 14:38:39 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 14:49:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 11:02:00 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include "libft/libft.h"
 
-char	*addchar(char c, char **str)
+char	*ft_addchar(char c, char **str)
 {
 	char	*buf;
 
@@ -24,30 +24,30 @@ char	*addchar(char c, char **str)
 	return (buf);
 }
 
-char	*uitoa(uintmax_t n, unsigned int base)
+char	*ft_uimaxtoa(uintmax_t n, unsigned int base)
 {
 	char	*str;
 
 	str = NULL;
 	if (!n)
-		str = addchar('0', &str);
+		str = ft_addchar('0', &str);
 	else
 	{
 		while (n)
 		{
-			str = addchar((char)(n % base), &str);
+			str = ft_addchar((char)(n % base), &str);
 			n /= base;
 		}
 	}
 	return (str);
 }
 
-char	*itoa(intmax_t n, unsigned int base)
+char	*ft_imaxtoa(intmax_t n, unsigned int base)
 {
 	char	*str;
 	char	*tmp;
 
 	tmp = "-";
-	str = uitoa((uintmax_t)((n < 0) ? -n : n), base);
+	str = ft_uimaxtoa((uintmax_t)((n < 0) ? -n : n), base);
 	return ((n < 0) ? ft_strappend(&tmp, &str, 'S') : str);
 }
