@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/08/21 14:16:17 by ygaude            #+#    #+#             */
+/*   Updated: 2017/08/21 14:36:09 by ygaude           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 14:40:41 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 14:16:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +61,33 @@ int		ft_count_flag(const char *str)
 	return (count);
 }
 
+void	*ft_getvalue(t_flag flag, va_list *ap)
+{
+	void	*ptr;
+
+	ptr = NULL;
+	if (ft_strchr("diouxXc", flag.specifier))
+	{
+		ptr = malloc(sizeof(int));
+		*((int *)ptr) = va_arg(*ap, int);
+	}
+	else if (ft_strchr("DOU", flag.specifier))
+	{
+		ptr = malloc(sizeof(long));
+		*((long *)ptr) = va_arg(*ap, long);
+	}
+	else if (flag.specifier == 'C')
+	{
+		ptr = malloc(sizeof(wchar_t));
+		*((wchar_t *)ptr) = va_arg(*ap, wchar_t);
+	}
+	else if (ft_strchr("sS", flag.specifier))
+		ptr = va_arg(*ap, char *);
+	else if (flag.specifier == 'p')
+		ptr = va_arg(*ap, void *);
+	return (ptr);
+}
+
 t_flag	ft_parse_flag(const char *str, va_list *ap)
 {
 	t_flag	flag;
@@ -58,6 +97,7 @@ t_flag	ft_parse_flag(const char *str, va_list *ap)
 	flag.precision = ft_get_precision(str, ap);
 	flag.length = ft_get_length(str);
 	flag.specifier = ft_get_specifier(str);
+	flag.value = ft_getvalue(flag, ap);
 	return (flag);
 }
 
