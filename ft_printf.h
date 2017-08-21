@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/20 14:53:28 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/21 14:04:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_flag
 	int			precision;
 	char		length;
 	char		specifier;
+	void		*value;
 }				t_flag;
 
 int				ft_get_attributes(const char *str);
