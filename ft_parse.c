@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 18:23:13 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/22 10:59:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int		ft_count_flag(const char *str)
 		while (str[i] && !ft_strchr("sSpdDioOuUxXcC%", str[i]))
 			i++;
 		count += (str[i] != 0);
+		i += (str[i] != 0);
 	}
 	return (count);
 }
