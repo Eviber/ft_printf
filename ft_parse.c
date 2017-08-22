@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/22 10:59:26 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/22 20:19:37 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,18 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 
-char	*ft_sub_flag(const char *str)
+char	*ft_sub_flag(const char *str, int *i)
 {
-	static int	i = 0;
 	int			start;
 
-	while (str[i] && str[i] != '%')
-		i++;
-	if (!str[i])
+	while (str[*i] && str[*i] != '%')
+		(*i)++;
+	if (!str[*i])
 		return (NULL);
-	start = i++;
-	while (str[i] && !ft_strchr("sSpdDioOuUxXcC%", str[i]))
-		i++;
-	return ((str[i]) ? ft_strsub(str, start + 1, i - start) : NULL);
+	start = (*i)++;
+	while (str[*i] && !ft_strchr("sSpdDioOuUxXcC%", str[*i]))
+		(*i)++;
+	return ((str[*i]) ? ft_strsub(str, start + 1, *i - start) : NULL);
 }
 
 int		ft_count_flag(const char *str)
@@ -94,17 +93,21 @@ int		ft_parse_flags(const char *str, va_list *ap, t_flag **flag)
 {
 	int			count;
 	int			i;
+	int			j;
 	char		*tmp;
 
 	i = 0;
+	j = 0;
 	count = ft_count_flag(str);
+	if (!count)
+		return (0);
 	if (!(*flag = (t_flag *)malloc(sizeof(t_flag) * count)))
 		return (-1);
 	while (i < count)
 	{
-		tmp = ft_sub_flag(str);
+		tmp = ft_sub_flag(str, &j);
 		if (tmp)
-			*flag[i] = ft_parse_flag(tmp, ap);
+			(*flag)[i] = ft_parse_flag(tmp, ap);
 		i++;
 	}
 	return (count);

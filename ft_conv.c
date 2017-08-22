@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:10:44 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 18:26:40 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/22 20:11:18 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*ft_conv_next(const char *format, size_t *i, t_flag *flags)
 	char		*str;
 	char		*tmp;
 
-	if (format[*i] != '%')
+	if (format[*i] && format[*i] != '%')
 	{
 		tmp = ft_strchr(format + *i, '%');
 		len = (tmp) ? tmp - format + *i : ft_strlen(format) - *i;
@@ -42,7 +42,7 @@ char	*ft_conv_next(const char *format, size_t *i, t_flag *flags)
 		len++;
 		str = ft_conv_flag(flags[iflag++]);
 	}
-	*i += len;
+	*i = (*i + len > ft_strlen(format)) ? ft_strlen(format) : len;
 	return (str);
 }
 
