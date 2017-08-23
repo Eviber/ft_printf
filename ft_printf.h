@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 17:23:07 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/23 16:52:41 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int				ft_parse_flags(const char *str, va_list *ap, t_flag **flag);
 
 char			*ft_conv(const char *format, t_flag *flags);
 
-char	*ft_addchar(char c, char **str);
+char	*ft_addchar(char c, char **str, char where);
 char	*ft_uimaxtoa(uintmax_t n, unsigned int base);
 char	*ft_imaxtoa(intmax_t n, unsigned int base);
 

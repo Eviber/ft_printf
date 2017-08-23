@@ -6,20 +6,23 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:09:26 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/23 16:45:39 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/23 16:52:10 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include "libft/libft.h"
 
-char	*ft_addchar(char c, char **str)
+char	*ft_addchar(char c, char **str, char where)
 {
 	char	buf[2];
 
 	buf[0] = c;
 	buf[1] = '\0';
-	buf = ft_strappend(&buf, str, 'S');
+	if (where == 'B')
+		buf = ft_strappend(&buf, str, 'S');
+	else
+		buf = ft_strappend(str, &buf, 'F');
 	return (buf);
 }
 
@@ -30,14 +33,14 @@ char	*ft_uimaxtoa(uintmax_t n, unsigned int base)
 
 	str = NULL;
 	if (!n)
-		str = ft_addchar('0', &str);
+		str = ft_addchar('0', &str, 'B');
 	else
 	{
 		while (n)
 		{
 			c = n % base;
 			c = (c < 10) ? c + '0' : c - 10 + 'a';
-			str = ft_addchar(c, &str);
+			str = ft_addchar(c, &str, 'B');
 			n /= base;
 		}
 	}
