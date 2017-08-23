@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:09:26 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/21 12:10:11 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/23 16:45:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 
 char	*ft_addchar(char c, char **str)
 {
-	char	*buf;
+	char	buf[2];
 
-	c = (c < 10) ? c + '0' : c - 10 + 'a';
-	buf = ft_strnew(1);
 	buf[0] = c;
-	buf = ft_strappend(&buf, str, 'B');
+	buf[1] = '\0';
+	buf = ft_strappend(&buf, str, 'S');
 	return (buf);
 }
 
 char	*ft_uimaxtoa(uintmax_t n, unsigned int base)
 {
 	char	*str;
+	char	c;
 
 	str = NULL;
 	if (!n)
@@ -35,7 +35,9 @@ char	*ft_uimaxtoa(uintmax_t n, unsigned int base)
 	{
 		while (n)
 		{
-			str = ft_addchar((char)(n % base), &str);
+			c = n % base;
+			c = (c < 10) ? c + '0' : c - 10 + 'a';
+			str = ft_addchar(c, &str);
 			n /= base;
 		}
 	}
