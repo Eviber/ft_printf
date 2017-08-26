@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 17:55:08 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/26 21:35:56 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,25 @@
 
 int				ft_get_attributes(const char *str)
 {
+	int		i;
 	int		ret;
 
+	i = 0;
 	ret = 0;
-	if (ft_strchr(str, '#'))
-		ret = ret | SHARP;
-	if (ft_strchr(str, '-'))
-		ret = ret | MINUS;
-	if (ft_strchr(str, '+'))
-		ret = ret | PLUS;
-	if (ft_strchr(str, ' '))
-		ret = ret | SPACE;
+	while (str[i] && ft_strchr("#-+ 0", str[i]))
+	{
+		if (str[i] == '#')
+			ret = ret | SHARP;
+		if (str[i] == '-')
+			ret = ret | MINUS;
+		if (str[i] == '+')
+			ret = ret | PLUS;
+		if (str[i] == ' ')
+			ret = ret | SPACE;
+		if (str[i] == '0')
+			ret = ret | ZERO;
+		i++;
+	}
 	return (ret);
 }
 
