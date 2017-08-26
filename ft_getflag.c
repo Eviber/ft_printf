@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/22 20:18:27 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/26 17:55:08 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 
-int		ft_get_attributes(const char *str)
+int				ft_get_attributes(const char *str)
 {
 	int		ret;
 
@@ -30,7 +30,7 @@ int		ft_get_attributes(const char *str)
 	return (ret);
 }
 
-int		ft_get_width(const char *str, va_list *ap)
+int				ft_get_width(const char *str, va_list *ap)
 {
 	int		i;
 
@@ -44,7 +44,7 @@ int		ft_get_width(const char *str, va_list *ap)
 	return (0);
 }
 
-int		ft_get_precision(const char *str, va_list *ap)
+int				ft_get_precision(const char *str, va_list *ap)
 {
 	int		i;
 
@@ -63,24 +63,24 @@ int		ft_get_precision(const char *str, va_list *ap)
 	return (-1);
 }
 
-char	ft_get_length(const char *str)
+unsigned char	ft_get_length(const char *str)
 {
 	char	*c;
 	int		i;
 
 	i = 0;
-	while (str[i] && !ft_strchr("hljztL", str[i]))
+	while (str[i] && !ft_strchr("hljz", str[i]))
 		i++;
 	if (ft_strnequ(str + i, "hh", 2))
-		return ('h' + 'h');
+		return ('H');
 	if (ft_strnequ(str + i, "ll", 2))
-		return ('l' + 'l');
-	if ((c = ft_strchr("hljztL", str[i])))
+		return ('L');
+	if ((c = ft_strchr("hljz", str[i])))
 		return (*c);
 	return (0);
 }
 
-char	ft_get_specifier(const char *str)
+unsigned char	ft_get_specifier(const char *str)
 {
 	int		i;
 

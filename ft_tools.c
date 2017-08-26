@@ -6,12 +6,25 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:09:26 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/23 17:25:04 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/26 18:27:44 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
 #include "libft/libft.h"
+
+int		ft_getbase(char specifier)
+{
+	if (ft_strchr("oO", specifier))
+		return (8);
+	else if (ft_strchr("dDi", specifier))
+		return (-10);
+	else if (ft_strchr("uU", specifier))
+		return (10);
+	else if (ft_strchr("pxX", specifier))
+		return (16);
+	return (0);
+}
 
 char	*ft_addchar(char c, char **str, char where)
 {

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:09:31 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/22 20:32:30 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/23 18:13:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	test_parsing(const char *format, ...)
 	while (++i < ret)
 	{
 		cur = flags[i];
-		printf("\ti = %d\n\tattributes = %x\n\twidth = %d\n\tprecision = %d\n\tlength = %d (\'%c\')\n\tspecifier = %c\n\tvalue = %d\n\n", i, cur.attributes, cur.width, cur.precision, cur.length, cur.length, cur.specifier, *(int *)(cur.value));
+		printf("\ti = %d\n\tattributes = %x\n\twidth = %d\n\tprecision = %d\n\tlength = %d (\'%c\')\n\tspecifier = %c\n\tvalue = %s\n\n", i, cur.attributes, cur.width, cur.precision, cur.length, cur.length, cur.specifier, (char *)(cur.value));
 	}
 	printf("- - - - - - - - - - - - - -\n\n");
 }
@@ -45,7 +45,7 @@ void	test_parsing(const char *format, ...)
 int		main(void)
 {
 //	printf("\n");
-//	test_parsing("test %d %d %d %d   ", 1, 2, 3, 4);
-	ft_printf("test %d %d %d %d\n", 1, 2, 3, 4);
+//	test_parsing("test \"%s\" endtest", "DATSDATEST");
+	ft_printf("Test : \"%s\" %d %x \'%c\' %%\n", "hello", 5, 10, 'x');
 	return (0);
 }

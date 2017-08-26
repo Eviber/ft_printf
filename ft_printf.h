@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/23 16:52:41 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/26 18:39:33 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,20 @@ typedef struct	s_flag
 int				ft_get_attributes(const char *str);
 int				ft_get_width(const char *str, va_list *ap);
 int				ft_get_precision(const char *str, va_list *ap);
-char			ft_get_length(const char *str);
-char			ft_get_specifier(const char *str);
+unsigned char	ft_get_length(const char *str);
+unsigned char	ft_get_specifier(const char *str);
 
 int				ft_parse_flags(const char *str, va_list *ap, t_flag **flag);
 
 char			*ft_conv(const char *format, t_flag *flags);
 
-char	*ft_addchar(char c, char **str, char where);
-char	*ft_uimaxtoa(uintmax_t n, unsigned int base);
-char	*ft_imaxtoa(intmax_t n, unsigned int base);
+char			*ft_conv_int(t_flag flag);
 
-int		ft_printf(const char *format, ...);
+int				ft_getbase(char specifier);
+char			*ft_addchar(char c, char **str, char where);
+char			*ft_uimaxtoa(uintmax_t n, unsigned int base);
+char			*ft_imaxtoa(intmax_t n, unsigned int base);
+
+int				ft_printf(const char *format, ...);
 
 #endif
