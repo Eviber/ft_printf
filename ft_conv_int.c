@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 18:28:01 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 21:49:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 10:24:16 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,23 @@
 
 char	*ft_conv_int_prec(char *str, int prec)
 {
+	size_t	len;
+	char	*tmp;
+
 	if (!prec && ft_strequ(str, "0"))
 	{
 		free(str);
 		return (ft_strnew(0));
 	}
-	while (prec > 0 && ft_strlen(str) < prec)
-		str = ft_addchar('0', &str, 'B');
+	len = ft_strlen(str);
+	if (prec > 0 && len < prec)
+	{
+		tmp = ft_strnew(prec);
+		ft_memset(tmp, '0', prec - len);
+		tmp = ft_strcat(tmp, str);
+		free(str);
+		str = tmp;
+	}
 	return (str);
 }
 
