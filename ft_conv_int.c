@@ -6,17 +6,18 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 18:28:01 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 14:42:19 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 16:39:44 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
 #include <stdint.h>
 #include "libft/libft.h"
 #include "ft_printf.h"
 
 char	*ft_conv_int_prec(char *str, int prec)
 {
-	size_t	len;
+	int		len;
 	char	*tmp;
 
 	if (!prec && ft_strequ(str, "0"))
@@ -24,7 +25,7 @@ char	*ft_conv_int_prec(char *str, int prec)
 		free(str);
 		return (ft_strnew(0));
 	}
-	len = ft_strlen(str);
+	len = (int)ft_strlen(str);
 	if (prec > 0 && len < prec)
 	{
 		tmp = ft_strnew(prec);
@@ -48,13 +49,13 @@ char	ft_conv_int_iszero(t_flag flag)
 	return (c);
 }
 
-char	*ft_conv_int_width(str, flag, c)
+char	*ft_conv_int_width(char *str, t_flag flag, char c)
 {
 	char	*tmp;
 	size_t	len;
 
 	len = ft_strlen(str);
-	if (len < flag.width)
+	if (len < (size_t)flag.width)
 	{
 		tmp = ft_strnew(flag.width - len);
 		ft_memset(tmp, c, flag.width - len);
@@ -68,21 +69,20 @@ char	*ft_conv_int_width(str, flag, c)
 
 char	*ft_conv_int_flag(char *str, t_flag flag)
 {
-	size_t	len;
 	char	*tmp;
 	char	c;
 
-	c = ft_conv_int(flag);
+	c = ft_conv_int_iszero(flag);
 	tmp = NULL;
 	if (c == '0')
 		str = ft_conv_int_width(str, flag, c);
-	if (flag.attribute & SHARP && ft_strchr("oxX", flag.specifier))
-		tmp = (flag.specifier == o) ? "0" : "0x";
+	if (flag.attributes & SHARP && ft_strchr("oxX", flag.specifier))
+		tmp = (flag.specifier == 'o') ? "0" : "0x";
 	else if (ft_strchr("di", flag.specifier))
 	{
-		if (flag.attribute & PLUS)
+		if (flag.attributes & PLUS)
 			tmp = (*(intmax_t *)flag.value >= 0) ? "+" : "";
-		else if (flag.attribute & SPACE)
+		else if (flag.attributes & SPACE)
 			tmp = (*(intmax_t *)flag.value >= 0) ? " " : "";
 	}
 	str = ft_strappend(&tmp, &str, 'S');
