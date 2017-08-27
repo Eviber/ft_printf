@@ -6,7 +6,7 @@
 #    By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 17:02:14 by ygaude            #+#    #+#              #
-#    Updated: 2017/08/27 20:23:52 by ygaude           ###   ########.fr        #
+#    Updated: 2017/08/27 21:12:58 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ LIBFT_SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c        \
 			ft_striter.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c   \
 			ft_strmap.c ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c    \
 			ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c ft_strsplit.c   \
-			ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c     \
-			ft_strnlen.c
+			ft_strstr.c ft_strsub.c ft_strtoupper.c ft_strtrim.c ft_tolower.c  \
+			ft_toupper.c ft_strnlen.c
 
 OBJ = ${SRC:c=o}
 LIBFT_OBJ = ${LIBFT_SRC:c=o}
