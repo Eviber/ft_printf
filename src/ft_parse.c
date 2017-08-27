@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 17:18:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 20:18:03 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,14 @@ void	*ft_getvalue(t_flag flag, va_list *ap)
 	void	*ptr;
 
 	ptr = NULL;
+	if (ft_strchr("diouxXcDOUC", flag.specifier))
+		ptr = malloc(sizeof(intmax_t));
 	if (ft_strchr("diouxXc", flag.specifier))
-	{
-		ptr = malloc(sizeof(int));
-		*((int *)ptr) = va_arg(*ap, int);
-	}
+		*((intmax_t *)ptr) = va_arg(*ap, int);
 	else if (ft_strchr("DOU", flag.specifier))
-	{
-		ptr = malloc(sizeof(long));
-		*((long *)ptr) = va_arg(*ap, long);
-	}
+		*((intmax_t *)ptr) = va_arg(*ap, long);
 	else if (flag.specifier == 'C')
-	{
-		ptr = malloc(sizeof(wchar_t));
-		*((wchar_t *)ptr) = va_arg(*ap, wchar_t);
-	}
+		*((intmax_t *)ptr) = va_arg(*ap, wchar_t);
 	else if (ft_strchr("sS", flag.specifier))
 		ptr = va_arg(*ap, char *);
 	else if (flag.specifier == 'p')
