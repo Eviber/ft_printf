@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 18:28:01 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 17:18:27 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 21:07:58 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ char	*ft_conv_int_flag(char *str, t_flag flag)
 	tmp = NULL;
 	if (c == '0')
 		str = ft_conv_int_width(str, flag, c);
-	if (flag.attributes & SHARP && ft_strchr("oxX", flag.specifier))
+	if (*(intmax_t *)flag.value && flag.attributes & SHARP &&
+			ft_strchr("oxX", flag.specifier))
 		tmp = (flag.specifier == 'o') ? "0" : "0x";
 	else if (ft_strchr("di", flag.specifier))
 	{
@@ -104,5 +105,7 @@ char	*ft_conv_int(t_flag flag)
 		str = ft_uimaxtoa(*(intmax_t *)(flag.value), base);
 	str = ft_conv_int_prec(str, flag.precision);
 	str = ft_conv_int_flag(str, flag);
+	if (flag.specifier == 'X')
+		ft_strtoupper(str);
 	return (str);
 }
