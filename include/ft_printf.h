@@ -6,15 +6,15 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 18:39:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 20:34:24 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <stdarg.h>
-#include <stdint.h>
+# include <stdarg.h>
+# include <stdint.h>
 
 # define SHARP 1
 # define MINUS 2
