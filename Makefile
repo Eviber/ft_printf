@@ -6,7 +6,7 @@
 #    By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 17:02:14 by ygaude            #+#    #+#              #
-#    Updated: 2017/08/27 19:51:15 by ygaude           ###   ########.fr        #
+#    Updated: 2017/08/27 20:23:52 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,10 +52,12 @@ $(NAME): $(OBJ)
 	echo "Done !"
 
 clean:
+	make -C $(LIBFT_DIR) clean
 	rm -rf $(OBJ_DIR)
 	echo "Object files removed."
 
 fclean: clean
+	make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 	echo "$(NAME) removed"
 

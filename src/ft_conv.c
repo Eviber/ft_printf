@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:10:44 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 17:17:08 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 20:29:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*ft_conv_flag(t_flag flag)
 	if (ft_strchr("pdDioOuUxX", flag.specifier))
 		str = ft_conv_int(flag);
 	else if (flag.specifier == 's')
-		return(ft_strdup(flag.value));
+		return (ft_strdup(flag.value));
 	else if (flag.specifier == 'c')
 		str = ft_addchar(*(char *)(flag.value), NULL, 'A');
 	else
@@ -47,7 +47,7 @@ char	*ft_conv_next(const char *format, t_flag *flags, size_t *i, int *iflag)
 		len++;
 		str = ft_conv_flag(flags[(*iflag)++]);
 	}
-	*i += (*i + len > ft_strlen(format)) ? ft_strlen(format) - *i: len;
+	*i += (*i + len > ft_strlen(format)) ? ft_strlen(format) - *i : len;
 	return (str);
 }
 
