@@ -6,9 +6,11 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/27 20:58:29 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 21:00:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 21:02:45 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char	*ft_strtoupper(char *str)
 {
