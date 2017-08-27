@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 00:09:48 by ygaude            #+#    #+#             */
-/*   Updated: 2017/05/20 23:15:09 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 21:01:22 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char				*ft_strrchr(const char *s, int c);
 char				**ft_strsplit(const char *s, char c);
 char				*ft_strstr(const char *big, const char *small);
 char				*ft_strsub(const char *s, unsigned int start, size_t len);
+char				*ft_strtoupper(char *str);
 char				*ft_strtrim(const char *s);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
