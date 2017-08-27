@@ -6,12 +6,12 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:07:36 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 21:35:56 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 17:18:29 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 int				ft_get_attributes(const char *str)

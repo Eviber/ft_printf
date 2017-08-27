@@ -6,13 +6,13 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 18:28:01 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 16:39:44 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 17:18:27 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdint.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 char	*ft_conv_int_prec(char *str, int prec)

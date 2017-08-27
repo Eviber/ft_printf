@@ -6,12 +6,12 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:09:26 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 18:27:44 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 17:18:37 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include "libft/libft.h"
+#include "libft.h"
 
 int		ft_getbase(char specifier)
 {

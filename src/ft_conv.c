@@ -6,12 +6,12 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 12:10:44 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/26 18:33:05 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 17:17:08 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdint.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 char	*ft_conv_flag(t_flag flag)

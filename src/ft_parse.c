@@ -6,13 +6,13 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/22 20:19:37 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/27 17:18:33 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdarg.h>
-#include "libft/libft.h"
+#include "libft.h"
 #include "ft_printf.h"
 
 char	*ft_sub_flag(const char *str, int *i)
