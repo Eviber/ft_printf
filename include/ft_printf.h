@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 20:34:24 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/28 17:44:07 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int				ft_get_width(const char *str, va_list *ap);
 int				ft_get_precision(const char *str, va_list *ap);
 unsigned char	ft_get_length(const char *str);
 unsigned char	ft_get_specifier(const char *str);
+
+void			*ft_getvalue(t_flag flag, va_list *ap);
 
 int				ft_parse_flags(const char *str, va_list *ap, t_flag **flag);
 

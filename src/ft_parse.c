@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 05:26:04 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 20:18:03 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/28 17:45:53 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,6 @@ int		ft_count_flag(const char *str)
 		i += (str[i] != 0);
 	}
 	return (count);
-}
-
-void	*ft_getvalue(t_flag flag, va_list *ap)
-{
-	void	*ptr;
-
-	ptr = NULL;
-	if (ft_strchr("diouxXcDOUC", flag.specifier))
-		ptr = malloc(sizeof(intmax_t));
-	if (ft_strchr("diouxXc", flag.specifier))
-		*((intmax_t *)ptr) = va_arg(*ap, int);
-	else if (ft_strchr("DOU", flag.specifier))
-		*((intmax_t *)ptr) = va_arg(*ap, long);
-	else if (flag.specifier == 'C')
-		*((intmax_t *)ptr) = va_arg(*ap, wchar_t);
-	else if (ft_strchr("sS", flag.specifier))
-		ptr = va_arg(*ap, char *);
-	else if (flag.specifier == 'p')
-		ptr = va_arg(*ap, void *);
-	return (ptr);
 }
 
 t_flag	ft_parse_flag(const char *str, va_list *ap)

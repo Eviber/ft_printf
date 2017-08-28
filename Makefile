@@ -6,7 +6,7 @@
 #    By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/27 17:02:14 by ygaude            #+#    #+#              #
-#    Updated: 2017/08/27 21:12:58 by ygaude           ###   ########.fr        #
+#    Updated: 2017/08/28 17:45:22 by ygaude           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC_DIR = src/
 LIBFT_DIR = libft/
 OBJ_DIR = obj/
 
-SRC = ft_conv.c ft_conv_int.c ft_getflag.c ft_parse.c ft_printf.c ft_tools.c
+SRC = ft_conv.c ft_conv_int.c ft_getflag.c ft_parse.c ft_printf.c ft_tools.c   \
+	  ft_getvalue.c
 
 LIBFT_SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c ft_isascii.c        \
 			ft_isdigit.c ft_isprint.c ft_isspace.c ft_itoa.c ft_lstadd.c       \
