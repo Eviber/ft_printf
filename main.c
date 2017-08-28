@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:09:31 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 16:44:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/28 21:21:06 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,8 @@ void	test_parsing(const char *format, ...)
 
 int		main(void)
 {
-//	printf("\n");
 //	test_parsing("test \"%s\" endtest", "DATSDATEST");
-	ft_printf("Test : \"%s\" %d %x \'%c\' %%\n", "hello", 5, 10, 'x');
-	ft_printf("Test : %.5d\n", 5);
+	ft_printf("Test o : \'%#6o\'\n", 1337);
+	printf("Test o : \'%#6o\'\n", 1337);
 	return (0);
 }

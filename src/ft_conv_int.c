@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/26 18:28:01 by ygaude            #+#    #+#             */
-/*   Updated: 2017/08/27 21:07:58 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/08/28 21:27:49 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 #include "libft.h"
 #include "ft_printf.h"
 
-char	*ft_conv_int_prec(char *str, int prec)
+char	*ft_conv_int_prec(char *str, t_flag flag)
 {
 	int		len;
 	char	*tmp;
 
-	if (!prec && ft_strequ(str, "0"))
+	if (ft_strchr("oO", flag.specifier) && flag.attributes & SHARP)
+		flag.precision = ft_strlen(str) + 1;
+	if (!flag.precision && ft_strequ(str, "0"))
 	{
 		free(str);
 		return (ft_strnew(0));
 	}
 	len = (int)ft_strlen(str);
-	if (prec > 0 && len < prec)
+	if (flag.precision > 0 && len < flag.precision)
 	{
-		tmp = ft_strnew(prec);
-		ft_memset(tmp, '0', prec - len);
+		tmp = ft_strnew(flag.precision);
+		ft_memset(tmp, '0', flag.precision - len);
 		tmp = ft_strcat(tmp, str);
 		free(str);
 		str = tmp;
@@ -78,7 +80,7 @@ char	*ft_conv_int_flag(char *str, t_flag flag)
 		str = ft_conv_int_width(str, flag, c);
 	if (*(intmax_t *)flag.value && flag.attributes & SHARP &&
 			ft_strchr("oxX", flag.specifier))
-		tmp = (flag.specifier == 'o') ? "0" : "0x";
+		tmp = (flag.specifier == 'o') ? "" : "0x";
 	else if (ft_strchr("di", flag.specifier))
 	{
 		if (flag.attributes & PLUS)
@@ -103,7 +105,7 @@ char	*ft_conv_int(t_flag flag)
 		str = ft_imaxtoa(*(intmax_t *)(flag.value), -base);
 	else
 		str = ft_uimaxtoa(*(intmax_t *)(flag.value), base);
-	str = ft_conv_int_prec(str, flag.precision);
+	str = ft_conv_int_prec(str, flag);
 	str = ft_conv_int_flag(str, flag);
 	if (flag.specifier == 'X')
 		ft_strtoupper(str);
