@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/07 11:29:07 by ygaude            #+#    #+#             */
-/*   Updated: 2016/11/22 11:09:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/02 16:45:28 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,5 @@
 
 char				*ft_strcpy(char *dst, const char *src)
 {
-	ft_memcpy(dst, src, ft_strlen(src) + 1);
-	return (dst);
+	return(ft_memcpy(dst, src, ft_strlen(src) + 1));
 }
