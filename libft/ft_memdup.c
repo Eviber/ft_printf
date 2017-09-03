@@ -6,15 +6,15 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 18:44:54 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/02 19:01:17 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/03 01:10:50 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void			*ft_memdup(void *p, size_t l)
+void				*ft_memdup(void *p, size_t l)
 {
-	void	*res;
+	void	*r;
 
-	return ((!p|| !l|| !(res = ft_memalloc(l))) ? NULL : ft_memcpy(res, p, l));
+	return ((!p || !l || !(r = ft_memalloc(l))) ? NULL : ft_memcpy(r, p, l));
 }
