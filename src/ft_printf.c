@@ -5,8 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2017/09/03 19:07:11 by ygaude            #+#    #+#             */
+/*   Updated: 2017/09/03 23:20:27 by ygaude           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/03 06:00:55 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/03 19:04:11 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,57 +41,64 @@ typedef struct		s_data
 	int				end;
 }					t_data;
 
-char	*ft_flagappend(t_str *s1, t_str *s2, char c)
+t_str	ft_flagappend(t_str *s1, t_str *s2, char c)
 {
-	char	*str;
+	t_str	res;
 
 	if (s1 && s1->str && s2 && s2->str)
-		str = ft_memjoin(s1->str, s1->len, s2->str, s2->len);
+		res.str = ft_memjoin(s1->str, s1->len, s2->str, s2->len);
 	else if (s1 && s1->str && *len)
-		str = ft_memdup(s1->str, s1->len);
+		res.str = ft_memdup(s1->str, s1->len);
 	else if (data && s2->str && s2->len)
-		str = ft_memdup(s2->str, s2->len);
+		res.str = ft_memdup(s2->str, s2->len);
 	else
-		str = ft_memalloc(1);
+		res.str = ft_memalloc(1);
 	if (c == 'F' || c == 'B')
 		ft_memdel((void **)(s1->str));
 	if (c == 'S' || c == 'B')
 		ft_memdel((void **)(s2->str));
-	return (str);
+	return (res);
 }
 
-char	*ft_loop(char *str)
+t_str	ft_loop(char *fmt, va_list ap)
 {
 	t_data	data;
-	char	*res;
+	t_str	res;
+	t_str	chunk;
 	int		inflag;
-	int		i;
+	char	c;
 
-	i = -1;
-	res = NULL;
+	ft_memset(&data, 0, sizeof(data));
+	fmt.len = (size_t)-1;
 	inflag = 0;
-	while (str[++i])
+	chunk.str = fmt;
+	while ((c = fmt[++fmt.len]))
 	{
-		if (str[i] == '%')
-		{
+		if (inflag && ft_strchr(SPECIFIER, c))
+			ft_flagappend(ft_domagic(fmt));
+		else if (c == '%')
 			ft_flagappend(&res, &len, &data, 'F');
-			inflag = 1;
-		}
-		else if (inflag && ft_strchr(SPECIFIER, str[i]))
+		if ((c == '%') || (inflag && ft_strchr(SPECIFIER, c)))
 		{
-			ft_flagappend(ft_domagic(str));
-			inflag = 0;
+			chunk.str = fmt + fmt_len;
+			inflag = !inflag;
 		}
 	}
 	return (res);
 }
 
-int		ft_printf(char *format, ...)
+int		ft_printf(const char *format, ...)
 {
-	size_t		len;
+	va_list	ap;
+	t_str	fmt;
+	t_str	res;
 
-	len = 42;
-	return (len);
+	va_start(ap, format);
+	fmt.str = (char *)format;
+	res = ft_loop(fmt, ap);
+	if (res.len >= 0)
+		write(1, res.str, res.len);
+	return (res.len);
 }
 
 int		main(void)
