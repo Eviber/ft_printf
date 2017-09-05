@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/04 05:33:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/05 02:05:21 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <unistd.h>
 #include "../libft/libft.h"
 
-#define SPECIFIER "sSpdDioOuUxXcC"
+#define SPECIFIER "sSpdDioOuUxXcC%"
 
 typedef struct		s_str
 {
@@ -34,6 +34,7 @@ t_str	ft_flagappend(t_str s1, t_str s2, char c)
 {
 	t_str	res;
 
+printf("> s1 = \"%.*s\" ; s2 = \"%.*s\"\n", s1.len, s1.str, s2.len, s2.str);
 	res.len = s1.len + s2.len;
 	if (s1.str && s2.str && s1.len + s2.len)
 		res.str = ft_memjoin(s1.str, s1.len, s2.str, s2.len);
@@ -54,9 +55,10 @@ t_str	ft_domagic(t_str chunk, va_list ap)
 {
 	t_str	res;
 
+printf(" > \"%.*s\"\n", chunk.len, chunk.str);
 	(void)ap;
-	res.str = ft_memdup(chunk.str, chunk.len);
-	res.len = chunk.len;
+	res.str = ft_strdup("FLAG"); //ft_memdup(chunk.str, chunk.len);
+	res.len = 4; //chunk.len;
 	return (res);
 }
 
@@ -76,21 +78,24 @@ t_str	ft_loop(t_str fmt, va_list ap)
 	chunk.len = 0;
 	while ((c = fmt.str[++fmt.len]))
 	{
-		chunk.len++;
+		chunk.len = fmt.str + fmt.len - chunk.str + 1;
 		if (inflag && ft_strchr(SPECIFIER, c))
 		{
 			res = ft_flagappend(res, ft_domagic(chunk, ap), 'B');
-			chunk.str = fmt.str + fmt.len;
+			chunk.str = fmt.str + fmt.len + 1;
+			chunk.len = 0;
 			inflag = 0;
 		}
 		else if (c == '%')
 		{
+			chunk.len--;
 			res = ft_flagappend(res, chunk, 'F');
 			chunk.str = fmt.str + fmt.len + 1;
+			chunk.len = 0;
 			inflag = 1;
 		}
 	}
-	if (chunk.str == fmt.str || inflag)
+	if (!inflag)
 		res = ft_flagappend(res, chunk, 'F');
 	return (res);
 }
@@ -106,12 +111,20 @@ int		ft_printf(const char *format, ...)
 	res = ft_loop(fmt, ap);
 	va_end(ap);
 	if (res.str)
-		write(1, res.str, res.len);
+		printf("%.*s", res.len, res.str);//write(1, res.str, res.len);
 	return (res.len);
 }
 
-int		main(void)
+int		main(int argc, char **argv)
 {
-	ft_printf("test %%%%%%%% tt");
+	if (argc == 2)
+	{
+		printf(">%s\n", argv[1]);
+		printf(argv[1]);
+		printf("\n");
+		ft_printf(argv[1]);
+	}
+	else
+		ft_printf("Need one argument\n");
 	return (0);
 }
