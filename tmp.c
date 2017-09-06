@@ -13,7 +13,7 @@ void	main_flag(t_printf *data, int i, int state, int *option)
 
 char	*analyse_conversion(va_list lst, t_printf *data, int i, int size)
 // calcule la taille necessaire au ull_base, c est a dire les modifers de taille
-// et apelle conversion 
+// et apelle conversion
 
 char	*set_conversion(va_list l, int opt, t_printf *data, int cas)
 // en fonction du type de la conversion (deduit de la position en index dans la
