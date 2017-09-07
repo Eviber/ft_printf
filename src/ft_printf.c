@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/06 09:38:22 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/07 00:07:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,16 @@ t_str	ft_domagic(t_str chunk, va_list ap)
 
 //printf(" > \"%.*s\"\n", chunk.len, chunk.str);
 	(void)ap;
-	res.str = ft_strdup("FLAG"); //ft_memdup(chunk.str, chunk.len);
-	res.len = 4; //chunk.len;
+	if (ft_strchr(SPECIFIER, chunk.str[chunk.len - 1]))
+	{
+		res.str = ft_strdup("FLAG"); //ft_memdup(chunk.str, chunk.len);
+		res.len = 4; //chunk.len;
+	}
+	else
+	{
+		res.str = ft_memdup(chunk.str + chunk.len - 1, 1);
+		res.len = 1;
+	}
 	return (res);
 }
 
@@ -118,9 +126,9 @@ int		main(void)
 {
 	char	*tesst;
 
-	tesst = "This is a test %l tt";
+	tesst = "This is a test %13. 4d";
 	printf("> %s\n", tesst);
-	printf(tesst);
+	printf(tesst, 15);
 	printf("\n");
 	ft_printf(tesst);
 	return (0);
