@@ -6,12 +6,17 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/08 06:31:07 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/09 23:31:30 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
+
+/* TO DO
+** Mettre en place une meilleure
+** gestion de la largeur de champ
+*/
 
 void	ft_parse_flag(t_data *data, va_list ap)
 {

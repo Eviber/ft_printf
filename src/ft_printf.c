@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/09 02:34:14 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/09 23:54:49 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_str	ft_domagic(t_data data, va_list ap)
 		res.len = 4; //chunk.len;
 	}
 	else
-		res = ft_apply(
+		res = ft_apply(res, data);
 	return (res);
 }
 

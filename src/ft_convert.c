@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/09 03:05:16 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/09 23:59:23 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
 
 char	*ft_convert_integer(uintmax_t n, char specifier)
 {
-	if (ft_strchr("dDi", specifier))
-		return (ft_imaxtoa((intmax_t)n, 10));
-	else if (ft_strchr("uU", specifier))
+	if (ft_strchr("uU", specifier))
 		return (ft_uimaxtoa(n, 10));
 	else if (ft_strchr("pxX", specifier))
 		return (ft_uimaxtoa(n, 16));
 	else if (ft_strchr("oO", specifier))
 		return (ft_uimaxtoa(n, 8));
+	else
+		return (ft_imaxtoa((intmax_t)n, 10));
 }
 
 t_str	ft_apply(t_str res, t_data data)
@@ -43,6 +43,8 @@ t_str	ft_apply(t_str res, t_data data)
 	while (data.option[WIDTH] > 0 && data.option[WIDTH]-- > res.len)
 	{
 		if (data.option[MINUS])
+			res = ft_chunkappend(res, space, 'F');
+		else
 			res = ft_chunkappend(space, res, 'S');
 	}
 	return (res);
