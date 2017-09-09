@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strsub.c                                        :+:      :+:    :+:   */
+/*   ft_strinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/11/20 16:07:10 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/09 06:32:47 by ygaude           ###   ########.fr       */
+/*   Created: 2017/09/09 06:09:38 by ygaude            #+#    #+#             */
+/*   Updated: 2017/09/09 08:36:51 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char				*ft_strsub(const char *s, unsigned int start, size_t len)
+char			*ft_strinsert(char **toadd, char **str, size_t where, char c)
 {
 	char	*res;
 
-	if (!s || !(res = ft_strnew(len)))
+	if (!(toadd && *toadd && str && *str &&
+		(res = ft_strnew(ft_strlen(*toadd) + ft_strlen(*str)))))
 		return (NULL);
-	return (ft_strncpy(res, s + start, len));
+	ft_strcat(ft_strcat(ft_strncat(res, *str, where), *toadd), *str + where);
+	if (c == 'F' || c == 'B')
+		ft_strdel(toadd);
+	if (c == 'S' || c == 'B')
+		ft_strdel(str);
+	return (res);
 }
