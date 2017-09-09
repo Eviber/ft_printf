@@ -67,6 +67,7 @@ char				*ft_strcpy(char *dst, const char *src);
 void				ft_strdel(char **as);
 char				*ft_strdup(const char *s1);
 int					ft_strequ(const char *s1, const char *s2);
+char			*ft_strinsert(char **toadd, char **str, size_t where, char c);
 void				ft_striter(char *s, void (*f)(char *));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 char				*ft_strjoin(const char *s1, const char *s2);
