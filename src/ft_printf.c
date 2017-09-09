@@ -6,30 +6,16 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/07 00:07:47 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/09 02:34:14 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
 #include "../libft/libft.h"
+#include "../include/ft_printf.h"
 
-#define SPECIFIER "sSpdDioOuUxXcC%"
-#define FLAG "1234567890#-+ .lhjz"
-
-typedef struct		s_str
-{
-	size_t			len;
-	char			*str;
-}					t_str;
-
-typedef struct		s_data
-{
-	struct s_str	chunk;
-	struct s_str	format;
-}					t_data;
-
-t_str	ft_flagappend(t_str s1, t_str s2, char c)
+t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 {
 	t_str	res;
 
@@ -50,22 +36,19 @@ t_str	ft_flagappend(t_str s1, t_str s2, char c)
 	return (res);
 }
 
-t_str	ft_domagic(t_str chunk, va_list ap)
+t_str	ft_domagic(t_data data, va_list ap)
 {
 	t_str	res;
 
-//printf(" > \"%.*s\"\n", chunk.len, chunk.str);
-	(void)ap;
-	if (ft_strchr(SPECIFIER, chunk.str[chunk.len - 1]))
+//printf(" > \"%.*s\"\n", data.chunk.len, data.chunk.str);
+	ft_parse_flag(&data, ap);
+	if (ft_strchr(SPECIFIER, data.chunk.str[data.chunk.len - 1]))
 	{
 		res.str = ft_strdup("FLAG"); //ft_memdup(chunk.str, chunk.len);
 		res.len = 4; //chunk.len;
 	}
 	else
-	{
-		res.str = ft_memdup(chunk.str + chunk.len - 1, 1);
-		res.len = 1;
-	}
+		res = ft_apply(
 	return (res);
 }
 
@@ -73,7 +56,6 @@ t_str	ft_loop(t_str fmt, va_list ap)
 {
 	t_data	data;
 	t_str	res;
-	t_str	chunk;
 	int		inflag;
 	char	c;
 
@@ -88,7 +70,7 @@ t_str	ft_loop(t_str fmt, va_list ap)
 		data.chunk.len = fmt.str + fmt.len - data.chunk.str + 1;
 		if (inflag && !ft_strchr(FLAG, c))
 		{
-			res = ft_flagappend(res, ft_domagic(data.chunk, ap), 'B');
+			res = ft_chunkappend(res, ft_domagic(data, ap), 'B');
 			data.chunk.str = fmt.str + fmt.len + 1;
 			data.chunk.len = 0;
 			inflag = 0;
@@ -96,14 +78,14 @@ t_str	ft_loop(t_str fmt, va_list ap)
 		else if (c == '%')
 		{
 			data.chunk.len--;
-			res = ft_flagappend(res, data.chunk, 'F');
-			data.chunk.str = fmt.str + fmt.len + 1;
+			res = ft_chunkappend(res, data.chunk, 'F');
+			data.chunk.str = fmt.str + fmt.len;
 			data.chunk.len = 0;
 			inflag = 1;
 		}
 	}
 	if (!inflag)
-		res = ft_flagappend(res, data.chunk, 'F');
+		res = ft_chunkappend(res, data.chunk, 'F');
 	return (res);
 }
 
@@ -126,10 +108,10 @@ int		main(void)
 {
 	char	*tesst;
 
-	tesst = "This is a test %13. 4d";
+	tesst = "This is a test \'%#012+.2%\'";
 	printf("> %s\n", tesst);
-	printf(tesst, 15);
+	printf(tesst, 6, 4, 15);
 	printf("\n");
-	ft_printf(tesst);
+	ft_printf(tesst, 6, 4, 15);
 	return (0);
 }
