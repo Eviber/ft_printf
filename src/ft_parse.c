@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/09 23:31:30 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/10 08:05:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,30 @@
 ** Mettre en place une meilleure
 ** gestion de la largeur de champ
 */
+
+int		ft_getsize(t_str chunk)
+{
+	int		size;
+
+	size = 0;
+	if(ft_strchr("SpDOUC", chunk.str[chunk.len]))
+		size = sizeof(long);
+	else if(ft_strnstr(chunk.str, "j", chunk.len))
+		size = sizeof(intmax_t);
+	else if(ft_strnstr(chunk.str, "z", chunk.len))
+		size = sizeof(size_t);
+	else if(ft_strnstr(chunk.str, "ll", chunk.len))
+		size = sizeof(long long);
+	else if(ft_strnstr(chunk.str, "l", chunk.len))
+		size = sizeof(long);
+	else if(ft_strnstr(chunk.str, "h", chunk.len))
+		size = sizeof(short);
+	else if(ft_strnstr(chunk.str, "hh", chunk.len))
+		size = sizeof(char);
+	if((!size && ft_strchr("diouxX", chunk.str[chunk.len])))
+		size = sizeof(int);
+	return (size * 8 - (ft_strchr("di", chunk.str[chunk.len]) != NULL));
+}
 
 void	ft_parse_flag(t_data *data, va_list ap)
 {

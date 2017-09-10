@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/09 23:54:49 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/10 08:30:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_str	ft_domagic(t_data data, va_list ap)
 {
 	t_str	res;
 
-//printf(" > \"%.*s\"\n", data.chunk.len, data.chunk.str);
+	ft_memset(&res, 0, sizeof(res));
 	ft_parse_flag(&data, ap);
 	if (ft_strchr(SPECIFIER, data.chunk.str[data.chunk.len - 1]))
 	{
@@ -48,7 +48,12 @@ t_str	ft_domagic(t_data data, va_list ap)
 		res.len = 4; //chunk.len;
 	}
 	else
+	{
+		res.str = ft_strnew(1);
+		res.str[0] = data.chunk.str[data.chunk.len - 1];
+		res.len = 1;
 		res = ft_apply(res, data);
+	}
 	return (res);
 }
 
@@ -64,7 +69,6 @@ t_str	ft_loop(t_str fmt, va_list ap)
 	fmt.len = (size_t)-1;
 	inflag = 0;
 	data.chunk.str = fmt.str;
-	data.chunk.len = 0;
 	while ((c = fmt.str[++fmt.len]))
 	{
 		data.chunk.len = fmt.str + fmt.len - data.chunk.str + 1;
@@ -103,7 +107,7 @@ int		ft_printf(const char *format, ...)
 		write(1, res.str, res.len);
 	return (res.len);
 }
-
+/*
 int		main(void)
 {
 	char	*tesst;
@@ -114,4 +118,4 @@ int		main(void)
 	printf("\n");
 	ft_printf(tesst, 6, 4, 15);
 	return (0);
-}
+}*/
