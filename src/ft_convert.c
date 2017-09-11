@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/11 06:53:15 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/11 23:31:47 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,25 +43,24 @@ t_str	ft_getstring(t_data data, va_list ap)
 	return (res);
 }
 #include <stdio.h>
-t_str	ft_getint(t_data data, va_list ap, size_t size)
+t_str	ft_getint(char c, va_list ap, size_t size)
 {
 	t_str	res;
-	uintmax_t	n;
 
-printf("size = %zd\n", (size + (size % 2)));
-	if (size <= sizeof(char))
-		n = va_arg(ap, int) & ~(~0 << (size + (size % 2)));
-	else if (size <= sizeof(short))
-		n = va_arg(ap, int) & ~(~0 << (size + (size % 2)));
-	else if (size <= sizeof(int))
-		n = va_arg(ap, int) & ~(~0 << (size + (size % 2)));
-	else if (size <= sizeof(long))
-		n = va_arg(ap, long) & ~(~0 << (size + (size % 2)));
-	else if (size <= sizeof(long long))
-		n = va_arg(ap, long long) & ~(~0 << (size + (size % 2)));
+//printf("size = %zd\n", (size + (size % 2)));
+	if (size <= sizeof(char) * 8)
+		res.str = ft_convert_integer((char)va_arg(ap, int), c);
+	else if (size <= sizeof(short) * 8)
+		res.str = ft_convert_integer((short)va_arg(ap, int), c);
+	else if (size <= sizeof(int) * 8)
+		res.str = ft_convert_integer((int)va_arg(ap, int), c);
+	else if (size <= sizeof(long) * 8)
+		res.str = ft_convert_integer((long)va_arg(ap, long), c);
+	else if (size <= sizeof(long long) * 8)
+		res.str = ft_convert_integer((long long)va_arg(ap, long long), c);
 	else
-		n = va_arg(ap, intmax_t);
-	res.str = ft_convert_integer(n, data.chunk.str[data.chunk.len - 1]);
+		res.str = ft_convert_integer(va_arg(ap, intmax_t), c);
+	
 	res.len = ft_strlen(res.str);
 	return (res);
 }
@@ -73,7 +72,7 @@ t_str	ft_convert(t_data data, va_list ap, size_t size)
 	if (ft_strchr("sScC", data.chunk.str[data.chunk.len - 1]))
 		res = ft_getstring(data, ap);
 	else
-		res = ft_getint(data, ap, size);
+		res = ft_getint(data.chunk.str[data.chunk.len - 1], ap, size);
 	return (res);
 }
 
@@ -89,7 +88,7 @@ t_str	ft_apply(t_str res, t_data data)
 	{
 		ft_putendl("int");
 	}
-	space.len = data.option[WIDTH] - res.len;
+	space.len = (data.option[WIDTH]) ? (data.option[WIDTH]) - res.len : 0;
 	space.str = ft_memset(ft_strnew(space.len),
 			(!data.option[MINUS] && data.option[ZERO]) ? '0' : ' ', space.len);
 	if (data.option[MINUS])
