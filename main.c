@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:09:31 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/10 03:57:01 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/11 07:01:37 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	ft_debug(char *str)
 
 int		main(void)
 {
-//	test_parsing("test \"%s\" endtest", "DATSDATEST");
-	ft_printf("Test o : \'%#6o\'\n", 1337);
-	printf("Test o : \'%#6o\'\n", 1337);
+	ft_printf("%hhd\n", 42000000);
+	printf("%hhd\n", 42000000);
+	ft_printf("%hd\n", 42000000);
+	printf("%hd\n", 42000000);
+	ft_printf("%d\n", 42000000);
+	printf("%d\n", 42000000);
 	return (0);
 }

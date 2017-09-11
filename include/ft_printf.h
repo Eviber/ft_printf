@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/10 07:33:40 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/11 01:49:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ typedef struct		s_data
 
 t_str				ft_chunkappend(t_str s1, t_str s2, char c);
 
+t_str				ft_convert(t_data data, va_list ap, size_t size);
 t_str				ft_apply(t_str res, t_data data);
-int					ft_getsize(t_str chunk);
+size_t				ft_getsize(t_str chunk);
 void				ft_parse_flag(t_data *data, va_list ap);
 
 int					ft_printf(const char *format, ...);

@@ -6,24 +6,25 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/10 08:05:47 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/11 06:59:45 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
+#  include <stdio.h>
 /* TO DO
 ** Mettre en place une meilleure
 ** gestion de la largeur de champ
 */
 
-int		ft_getsize(t_str chunk)
+size_t	ft_getsize(t_str chunk)
 {
-	int		size;
+	size_t	size;
 
 	size = 0;
-	if(ft_strchr("SpDOUC", chunk.str[chunk.len]))
+	if(ft_strchr("SpDOUC", chunk.str[chunk.len - 1]))
 		size = sizeof(long);
 	else if(ft_strnstr(chunk.str, "j", chunk.len))
 		size = sizeof(intmax_t);
@@ -33,13 +34,13 @@ int		ft_getsize(t_str chunk)
 		size = sizeof(long long);
 	else if(ft_strnstr(chunk.str, "l", chunk.len))
 		size = sizeof(long);
-	else if(ft_strnstr(chunk.str, "h", chunk.len))
-		size = sizeof(short);
 	else if(ft_strnstr(chunk.str, "hh", chunk.len))
 		size = sizeof(char);
-	if((!size && ft_strchr("diouxX", chunk.str[chunk.len])))
+	else if(ft_strnstr(chunk.str, "h", chunk.len))
+		size = sizeof(short);
+	if((!size && ft_strchr("diouxX", chunk.str[chunk.len - 1])))
 		size = sizeof(int);
-	return (size * 8 - (ft_strchr("di", chunk.str[chunk.len]) != NULL));
+	return (size * 8 - (ft_strchr("di", chunk.str[chunk.len - 1]) != NULL));
 }
 
 void	ft_parse_flag(t_data *data, va_list ap)
