@@ -6,13 +6,30 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/11 23:31:47 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/12 20:14:37 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include "../libft/libft.h"
 #include "../include/ft_printf.h"
+
+char	*ft_putunic(wchar_t c)
+{
+	int		i;
+	char	str[5];
+
+	i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
+	str[4] = '\0';
+	str[3] = (i == 3) ? (char)((c & 0x3F) | 0x80) : '\0';
+	c = (i == 3) ? c >> 6 : c;
+	str[2] = (i > 1) ? (char)((c & 0x3F) | 0x80) : '\0';
+	c = (i > 1) ? c >> 6 : c;
+	str[1] = (i > 0) ? (char)((c & 0x3F) | 0x80) : '\0';
+	str[0] = (i == 0) ? (char)c : (char)((c >> 6) | (0xF0 <<  (3 - i)));
+	write(1, str, ft_strlen(str));
+	return (str);
+}
 
 char	*ft_convert_integer(uintmax_t n, char specifier)
 {
