@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/12 20:14:37 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/13 15:54:42 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,55 @@
 #include "../libft/libft.h"
 #include "../include/ft_printf.h"
 
-char	*ft_putunic(wchar_t c)
+t_str	ft_unic(wchar_t unicstr[], int justonce)
 {
 	int		i;
-	char	str[5];
+	char	*str;
+	t_str	res;
+	wchar_t	c;
 
-	i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
-	str[4] = '\0';
-	str[3] = (i == 3) ? (char)((c & 0x3F) | 0x80) : '\0';
-	c = (i == 3) ? c >> 6 : c;
-	str[2] = (i > 1) ? (char)((c & 0x3F) | 0x80) : '\0';
-	c = (i > 1) ? c >> 6 : c;
-	str[1] = (i > 0) ? (char)((c & 0x3F) | 0x80) : '\0';
-	str[0] = (i == 0) ? (char)c : (char)((c >> 6) | (0xF0 <<  (3 - i)));
-	write(1, str, ft_strlen(str));
-	return (str);
+	res.str = NULL;
+	str = ft_strnew(4);
+	while (*unicstr || justonce)
+	{
+		c = *unicstr;
+		i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
+		str[4] = '\0';
+		str[3] = (i == 3) ? (char)((c & 0x3F) | 0x80) : '\0';
+		c = (i == 3) ? c >> 6 : c;
+		str[2] = (i > 1) ? (char)((c & 0x3F) | 0x80) : '\0';
+		c = (i > 1) ? c >> 6 : c;
+		str[1] = (i > 0) ? (char)((c & 0x3F) | 0x80) : '\0';
+		str[0] = (i == 0) ? (char)c : (char)((c >> 6) | (0xF0 <<  (3 - i)));
+		ft_strappend(&(res.str), &str, 'F');
+		if (justonce)
+			break ;
+		unicstr++;
+	}
+	res.len = (!justonce) ? 1 : ft_strlen(res.str);
+	return (res);
+}
+
+t_str	ft_getstring(char spec, va_list ap, size_t size)
+{
+	t_str	res;
+	wchar_t	tmp;
+
+	if (spec == 'c' && size < sizeof(long) * 8 && (res.len = 1))
+		res.str = ft_memset(ft_strnew(1), (char)va_arg(ap, int), 1);
+	else if (spec == 's' && size < sizeof(long) * 8)
+	{
+		if (!(res.str = (char *)va_arg(ap, char *)))
+			res.str = ft_strdup("(null)");
+		else
+			res.str = ft_strdup(res.str);
+		res.len = ft_strlen(res.str);
+	}
+	else if ((spec == 'c' || spec == 'C') && (tmp = va_arg(ap, wchar_t)))
+		res = ft_unic(&tmp, 1);
+	else if (spec == 's' || spec == 'S')
+		res = ft_unic(va_arg(ap, wchar_t *), 0);
+	return (res);
 }
 
 char	*ft_convert_integer(uintmax_t n, char specifier)
@@ -43,28 +77,10 @@ char	*ft_convert_integer(uintmax_t n, char specifier)
 		return (ft_imaxtoa((intmax_t)n, 10));
 }
 
-t_str	ft_getstring(t_data data, va_list ap)
-{
-	t_str	res;
-
-	if (data.chunk.str[data.chunk.len - 1] == 'c' && (res.len = 1))
-		res.str = ft_memset(ft_strnew(1), (char)va_arg(ap, int), 1);
-	else if (data.chunk.str[data.chunk.len - 1] == 's')
-	{
-		if (!(res.str = (char *)va_arg(ap, char *)))
-			res.str = ft_strdup("(null)");
-		else
-			res.str = ft_strdup(res.str);
-		res.len = ft_strlen(res.str);
-	}
-	return (res);
-}
-#include <stdio.h>
 t_str	ft_getint(char c, va_list ap, size_t size)
 {
 	t_str	res;
 
-//printf("size = %zd\n", (size + (size % 2)));
 	if (size <= sizeof(char) * 8)
 		res.str = ft_convert_integer((char)va_arg(ap, int), c);
 	else if (size <= sizeof(short) * 8)
@@ -77,7 +93,6 @@ t_str	ft_getint(char c, va_list ap, size_t size)
 		res.str = ft_convert_integer((long long)va_arg(ap, long long), c);
 	else
 		res.str = ft_convert_integer(va_arg(ap, intmax_t), c);
-	
 	res.len = ft_strlen(res.str);
 	return (res);
 }
@@ -87,7 +102,7 @@ t_str	ft_convert(t_data data, va_list ap, size_t size)
 	t_str		res;
 
 	if (ft_strchr("sScC", data.chunk.str[data.chunk.len - 1]))
-		res = ft_getstring(data, ap);
+		res = ft_getstring(data.chunk.str[data.chunk.len - 1], ap, size);
 	else
 		res = ft_getint(data.chunk.str[data.chunk.len - 1], ap, size);
 	return (res);
@@ -105,7 +120,8 @@ t_str	ft_apply(t_str res, t_data data)
 	{
 		ft_putendl("int");
 	}
-	space.len = (data.option[WIDTH]) ? (data.option[WIDTH]) - res.len : 0;
+	space.len = ((size_t)data.option[WIDTH] > res.len) ?
+			data.option[WIDTH] - res.len : 0;
 	space.str = ft_memset(ft_strnew(space.len),
 			(!data.option[MINUS] && data.option[ZERO]) ? '0' : ' ', space.len);
 	if (data.option[MINUS])

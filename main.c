@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:09:31 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/11 22:58:26 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/13 15:17:17 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_debug(char *str)
 
 int		main(void)
 {
-	printf("%5%\n", 42000000);
-	ft_printf("%5%\n", 42000000);
+	printf("%5ls\n", L"Yellow world!");
+	ft_printf("%5ls\n", L"Yellow world!");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/11 06:59:45 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/13 11:30:20 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 #include "../libft/libft.h"
 
 #  include <stdio.h>
-/* TO DO
-** Mettre en place une meilleure
-** gestion de la largeur de champ
-*/
 
 size_t	ft_getsize(t_str chunk)
 {
@@ -42,6 +38,11 @@ size_t	ft_getsize(t_str chunk)
 		size = sizeof(int);
 	return (size * 8 - (ft_strchr("di", chunk.str[chunk.len - 1]) != NULL));
 }
+
+/* TO DO
+** Mettre en place une meilleure
+** gestion de la largeur de champ
+*/
 
 void	ft_parse_flag(t_data *data, va_list ap)
 {
