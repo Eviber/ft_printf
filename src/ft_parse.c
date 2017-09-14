@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/13 11:30:20 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/14 16:22:22 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	ft_parse_flag(t_data *data, va_list ap)
 			opt[WIDTH] = (*str == '*') ? va_arg(ap, int) : ft_atoi(str);
 		if (((*str > '0' && *str <= '9') || *str == '*') && status == 2)
 			opt[PREC] = (*str == '*') ? va_arg(ap, int) : ft_atoi(str);
+		opt[PREC] = (status == 2 && opt[PREC] == -1) ? 0 : opt[PREC];
 		status += (status == 0 || status == 2) && ft_strchr("123456789*", *str);
 	}
 }
