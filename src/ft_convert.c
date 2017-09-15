@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/14 18:05:50 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/15 16:46:43 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,65 +111,67 @@ t_str	ft_convert(t_data data, va_list ap, size_t size)
 	return (res);
 }
 
-t_str	ft_apply(t_str res, t_data data)
+t_str	ft_applyint(t_str res, int opt[8], char spec)
+{
+	int		sign;
+	char	*tmp;
+
+	sign = (res.str[0] == '-') ? -1 : (res.str[0] != '0');
+	opt[PREFIX] += (sign < 0);
+	if (!sign && !opt[PREC] && !(res.len = 0))
+	{
+		ft_strdel(&(res.str));
+		res.str = ft_strnew(0);
+	}
+	if ((tmp = "0x") &&( spec == 'p' || (opt[HASH] && ft_strchr("oOxX", spec))))
+	{
+		if ((spec == 'o' || spec == 'O'))
+			opt[PREC] = (res.len < (size_t)opt[PREC] && opt[PREC] != -1) ?
+				opt[PREC] + (1 * opt[PREC]) : res.len + 1;
+		else if ((sign || spec == 'p') && (res.len += 2) && (opt[PREFIX] += 2))
+			res.str = ft_strappend(&tmp, &(res.str), 'S');
+	}
+	if (res.len - (sign < 0) < (size_t)opt[PREC] && opt[PREC] != -1)
+	{
+		tmp = ft_memset(ft_strnew(opt[PREC] - res.len + (sign < 0)), '0',
+				opt[PREC] - res.len + (sign < 0));
+		res.str = ft_strinsert(&tmp, &(res.str), opt[PREFIX], 'B');
+		res.len = (size_t)opt[PREC] + (sign < 0);
+	}
+	if ((opt[SPACE] || opt[PLUS]) && sign >= 0 && ft_strchr("dDi", spec))
+	{
+		tmp = (opt[PLUS]) ? "+" : " ";
+		res.str = ft_strappend(&tmp, &(res.str), 'S');
+		res.len++;
+		opt[PREFIX]++;
+	}
+	return (res);
+}
+
+t_str	ft_apply(t_str res, int opt[8], char spec)
 {
 	t_str	space;
-	int		sign;
 
-	if (ft_strchr("sScC", data.chunk.str[data.chunk.len - 1]))
+	if (ft_strchr("sScC", spec))
 	{
-		if (res.len > (size_t)data.option[PREC] && data.option[PREC] != -1)
-			res.len = data.option[PREC];
+		if (res.len > (size_t)opt[PREC] && opt[PREC] != -1)
+			res.len = opt[PREC];
 	}
-	else if (ft_strchr(SPECIFIER, data.chunk.str[data.chunk.len - 1]))
-	{
-		sign = (res.str[0] == '-') ? -1 : (res.str[0] != '0');
-		if (!sign && !data.option[PREC])
-		{
-			ft_strdel(&(res.str));
-			res.str = ft_strnew(0);
-			res.len = 0;
-		}
-		data.option[7] += (sign < 0);
-		if (data.chunk.str[data.chunk.len - 1] == 'p' || (data.option[HASH] && ft_strchr("oOxX", data.chunk.str[data.chunk.len - 1])))
-		{
-			if ((data.chunk.str[data.chunk.len - 1] == 'o' || data.chunk.str[data.chunk.len - 1] == 'O') && sign)
-				data.option[PREC] = (res.len < (size_t)data.option[PREC] && data.option[PREC] != -1) ? data.option[PREC] + (1 * data.option[PREC]) : res.len + 1;
-			else if (sign || data.chunk.str[data.chunk.len - 1] == 'p')
-			{
-				space.str = "0x";
-				res.str = ft_strappend(&(space.str), &(res.str), 'S');
-				res.len += 2;
-				data.option[7] += 2;
-			}
-		}
-		if (res.len - (sign < 0) < (size_t)data.option[PREC] && data.option[PREC] != -1)
-		{
-			space.str = ft_memset(ft_strnew(data.option[PREC] - res.len + (sign < 0)), '0', data.option[PREC] - res.len + (sign < 0));
-			res.str = ft_strinsert(&(space.str), &(res.str), data.option[7], 'B');
-			res.len = (size_t)data.option[PREC] + (sign < 0);
-		}
-		if ((data.option[SPACE] || data.option[PLUS]) && sign >= 0 && ft_strchr("dDi", data.chunk.str[data.chunk.len - 1]))
-		{
-			space.str = (data.option[PLUS]) ? "+" : " ";
-			res.str = ft_strappend(&(space.str), &(res.str), 'S');
-			res.len++;
-			data.option[7]++;
-		}
-	}
-	space.len = ((size_t)data.option[WIDTH] > res.len) ? data.option[WIDTH] - res.len : 0;
-	space.str = ft_memset(ft_strnew(space.len),
-			(!data.option[MINUS] && data.option[ZERO] && data.option[PREC] == -1) ? '0' : ' ', space.len);
-	if (data.option[MINUS])
+	else if (ft_strchr(SPECIFIER, spec))
+		res = ft_applyint(res, opt, spec);
+	space.len = ((size_t)opt[WIDTH] > res.len) ? opt[WIDTH] - res.len : 0;
+	space.str = ft_memset(ft_strnew(space.len), (!opt[MINUS] && opt[ZERO]
+				&& opt[PREC] == -1) ? '0' : ' ', space.len);
+	if (opt[MINUS])
 		res = ft_chunkappend(res, space, 'F');
 	else if (space.str[0] == '0' && space.len)
 	{
-		res.str = ft_strinsert(&(space.str), &(res.str), data.option[7], 'F');
+		res.str = ft_strinsert(&(space.str), &(res.str), opt[PREFIX], 'F');
 		res.len += space.len;
 	}
 	else if (space.len)
 		res = ft_chunkappend(space, res, 'F');
-	if (data.chunk.str[data.chunk.len - 1] == 'X')
+	if (spec == 'X')
 		ft_strtoupper(res.str);
 	return (res);
 }

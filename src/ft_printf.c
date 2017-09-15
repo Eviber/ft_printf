@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/13 13:57:35 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:55:10 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,22 @@ t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 t_str	ft_domagic(t_data data, va_list ap)
 {
 	t_str	res;
+	char	spec;
 
+	spec = data.chunk.str[data.chunk.len - 1];
 	ft_memset(&res, 0, sizeof(res));
 	ft_parse_flag(&data, ap);
-	if (ft_strchr(SPECIFIER, data.chunk.str[data.chunk.len - 1]))
+	if (ft_strchr(SPECIFIER, spec))
 	{
 		res = ft_convert(data, ap, ft_getsize(data.chunk));
-		res = ft_apply(res, data);
+		res = ft_apply(res, data.option, spec);
 	}
 	else
 	{
 		res.str = ft_strnew(1);
-		res.str[0] = data.chunk.str[data.chunk.len - 1];
+		res.str[0] = spec;
 		res.len = 1;
-		res = ft_apply(res, data);
+		res = ft_apply(res, data.option, spec);
 	}
 	return (res);
 }

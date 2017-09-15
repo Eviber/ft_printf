@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/11 01:49:42 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/15 15:54:50 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define SPECIFIER "sSpdDioOuUxXcC"
 # define FLAG "1234567890#-+ .lhjz*"
 
-enum { HASH, PLUS, MINUS, SPACE, ZERO, WIDTH, PREC };
+enum { HASH, PLUS, MINUS, SPACE, ZERO, WIDTH, PREC, PREFIX };
 
 typedef struct		s_str
 {
@@ -38,7 +38,8 @@ typedef struct		s_data
 t_str				ft_chunkappend(t_str s1, t_str s2, char c);
 
 t_str				ft_convert(t_data data, va_list ap, size_t size);
-t_str				ft_apply(t_str res, t_data data);
+t_str				ft_apply(t_str res, int opt[8], char spec);
+t_str				ft_applyint(t_str res, int opt[8], char spec);
 size_t				ft_getsize(t_str chunk);
 void				ft_parse_flag(t_data *data, va_list ap);
 
