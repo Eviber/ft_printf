@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/14 16:22:22 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/17 23:17:57 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,30 +44,47 @@ size_t	ft_getsize(t_str chunk)
 ** gestion de la largeur de champ
 */
 
+int		ft_parse_wlen(char **str, va_list ap)
+{
+	int		ret;
+
+	if (**str == '.')
+		(*str)++;
+	ret = (**str == '*') ? va_arg(ap, int) : 0;
+	if (**str == '*')
+		(*str)++;
+	else
+	{
+		while (ft_isdigit(**str))
+		{
+			ret = ret * 10 + (**str - '0');
+			(*str)++;
+		}
+	}
+	return (ret);
+}
+
 void	ft_parse_flag(t_data *data, va_list ap)
 {
 	char	*str;
-	int		status;
 	int		*opt;
 
 	str = data->chunk.str;
-	status = 0;
 	opt = data->option;
 	opt[PREC] = -1;
-	while (++str < data->chunk.str + data->chunk.len)
+	while (str < data->chunk.str + data->chunk.len)
 	{
-		if (*str == '.' && status <= 2)
-			status = (status == 2) ? 3 : 2;
 		opt[HASH] = (*str == '#') ? 1 : opt[HASH];
 		opt[PLUS] = (*str == '+') ? 1 : opt[PLUS];
 		opt[MINUS] = (*str == '-') ? 1 : opt[MINUS];
 		opt[SPACE] = (*str == ' ') ? 1 : opt[SPACE];
-		opt[ZERO] = (*str == '0' && status == 0) ? 1 : opt[ZERO];
-		if (((*str > '0' && *str <= '9') || *str == '*') && status == 0)
-			opt[WIDTH] = (*str == '*') ? va_arg(ap, int) : ft_atoi(str);
-		if (((*str > '0' && *str <= '9') || *str == '*') && status == 2)
-			opt[PREC] = (*str == '*') ? va_arg(ap, int) : ft_atoi(str);
-		opt[PREC] = (status == 2 && opt[PREC] == -1) ? 0 : opt[PREC];
-		status += (status == 0 || status == 2) && ft_strchr("123456789*", *str);
+		opt[ZERO] = (*str == '0') ? 1 : opt[ZERO];
+		if ((*str > '0' && *str <= '9') || *str == '*')
+			opt[WIDTH] = ft_parse_wlen(&str, ap);
+		else if (*str == '.')
+			opt[PREC] = ft_parse_wlen(&str, ap);
+		else
+			str++;
 	}
+	opt[PREC] = (opt[PREC] < -1) ? -1 : opt[PREC];
 }

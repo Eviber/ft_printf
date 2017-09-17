@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/15 15:55:10 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/17 21:27:57 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 {
 	t_str	res;
 
-//printf("> s1 = \"%.*s\" ; s2 = \"%.*s\"\n", s1.len, s1.str, s2.len, s2.str);
 	res.len = s1.len + s2.len;
 	if (s1.str && s2.str && s1.len + s2.len)
 		res.str = ft_memjoin(s1.str, s1.len, s2.str, s2.len);
@@ -36,7 +35,7 @@ t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 	return (res);
 }
 
-t_str	ft_domagic(t_data data, va_list ap)
+t_str	ft_domagic(t_data data, va_list ap, int *error)
 {
 	t_str	res;
 	char	spec;
@@ -46,8 +45,9 @@ t_str	ft_domagic(t_data data, va_list ap)
 	ft_parse_flag(&data, ap);
 	if (ft_strchr(SPECIFIER, spec))
 	{
-		res = ft_convert(data, ap, ft_getsize(data.chunk));
-		res = ft_apply(res, data.option, spec);
+		res = ft_convert(data, ap, ft_getsize(data.chunk), data.option[PREC]);
+		if (res.str)
+			res = ft_apply(res, data.option, spec);
 	}
 	else
 	{
@@ -56,10 +56,11 @@ t_str	ft_domagic(t_data data, va_list ap)
 		res.len = 1;
 		res = ft_apply(res, data.option, spec);
 	}
+	*error = (*error || res.str == NULL);
 	return (res);
 }
 
-t_str	ft_loop(t_str fmt, va_list ap)
+t_str	ft_loop(t_str fmt, va_list ap, int *error)
 {
 	t_data	data;
 	t_str	res;
@@ -76,7 +77,7 @@ t_str	ft_loop(t_str fmt, va_list ap)
 		data.chunk.len = fmt.str + fmt.len - data.chunk.str + 1;
 		if (inflag && !ft_strchr(FLAG, c))
 		{
-			res = ft_chunkappend(res, ft_domagic(data, ap), 'B');
+			res = ft_chunkappend(res, ft_domagic(data, ap, error), 'B');
 			data.chunk.str = fmt.str + fmt.len + 1;
 			data.chunk.len = 0;
 			inflag = 0;
@@ -100,24 +101,14 @@ int		ft_printf(const char *format, ...)
 	va_list	ap;
 	t_str	fmt;
 	t_str	res;
+	int		error;
 
+	error = 0;
 	fmt.str = (char *)format;
 	va_start(ap, format);
-	res = ft_loop(fmt, ap);
+	res = ft_loop(fmt, ap, &error);
 	va_end(ap);
-	if (res.str)
+	if (res.str && !error)
 		write(1, res.str, res.len);
-	return (res.len);
+	return ((error) ? -1 : res.len);
 }
-/*
-int		main(void)
-{
-	char	*tesst;
-
-	tesst = "This is a test \'%#012+.2%\'";
-	printf("> %s\n", tesst);
-	printf(tesst, 6, 4, 15);
-	printf("\n");
-	ft_printf(tesst, 6, 4, 15);
-	return (0);
-}*/
