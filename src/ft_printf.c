@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 18:44:31 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 23:06:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "../libft/libft.h"
 #include "../include/ft_printf.h"
 
-#   include <stdio.h>
 t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 {
 	t_str	res;
@@ -61,40 +60,44 @@ t_str	ft_domagic(t_data data, va_list ap, int *error)
 	return (res);
 }
 
+t_data	ft_loop_check(int check, t_data data, int *error, va_list ap)
+{
+	if (check)
+		data.res = ft_chunkappend(data.res, ft_domagic(data, ap, error), 'B');
+	else
+	{
+		data.chunk.len--;
+		data.res = ft_chunkappend(data.res, data.chunk, 'F');
+	}
+	data.chunk.len = 0;
+	return (data);
+}
+
 t_str	ft_loop(t_str fmt, va_list ap, int *error)
 {
 	t_data	data;
-	t_str	res;
 	int		inflag;
+	int		check;
 	char	c;
 
 	ft_memset(&data, 0, sizeof(data));
-	ft_memset(&res, 0, sizeof(res));
 	fmt.len = (size_t)-1;
 	inflag = 0;
 	data.chunk.str = fmt.str;
 	while ((c = fmt.str[++fmt.len]))
 	{
 		data.chunk.len = fmt.str + fmt.len - data.chunk.str + 1;
-		if (inflag && !ft_strchr(FLAG, c))
+		check = (inflag && !ft_strchr(FLAG, c));
+		if (check || (!check && (c == '%')))
 		{
-			res = ft_chunkappend(res, ft_domagic(data, ap, error), 'B');
-			data.chunk.str = fmt.str + fmt.len + 1;
-			data.chunk.len = 0;
-			inflag = 0;
-		}
-		else if (c == '%')
-		{
-			data.chunk.len--;
-			res = ft_chunkappend(res, data.chunk, 'F');
-			data.chunk.str = fmt.str + fmt.len;
-			data.chunk.len = 0;
-			inflag = 1;
+			data = ft_loop_check(check, data, error, ap);
+			inflag = !check;
+			data.chunk.str = fmt.str + fmt.len + check;
 		}
 	}
-	if (!inflag)
-		res = ft_chunkappend(res, data.chunk, 'F');
-	return (res);
+	if (!inflag && !(*error))
+		data.res = ft_chunkappend(data.res, data.chunk, 'F');
+	return (data.res);
 }
 
 int		ft_printf(const char *format, ...)
@@ -111,6 +114,7 @@ int		ft_printf(const char *format, ...)
 	va_end(ap);
 	if (res.str && !error)
 		write(1, res.str, res.len);
-	ft_strdel(&(res.str));
+	if (res.str)
+		ft_strdel(&(res.str));
 	return ((error) ? -1 : res.len);
 }

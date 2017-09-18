@@ -6,12 +6,29 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 19:14:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 22:48:12 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
+
+char	**ft_unicconv(int i, wchar_t c)
+{
+	char	**str;
+
+	if (!(str = (char **)ft_memalloc(sizeof(char *))))
+		return (NULL);
+	if (!(*str = ft_strnew(4)))
+		return (NULL);
+	(*str)[3] = (i == 3) ? (char)((c & 0x3F) | 0x80) : '\0';
+	c = (i == 3) ? c >> 6 : c;
+	(*str)[2] = (i > 1) ? (char)((c & 0x3F) | 0x80) : '\0';
+	c = (i > 1) ? c >> 6 : c;
+	(*str)[1] = (i > 0) ? (char)((c & 0x3F) | 0x80) : '\0';
+	(*str)[0] = (i == 0) ? (char)c : (char)((c >> 6) | (0xF0 << (3 - i)));
+	return (str);
+}
 
 size_t	ft_getsize(t_str chunk)
 {

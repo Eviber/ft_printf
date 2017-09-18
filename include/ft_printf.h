@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 19:16:07 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 22:42:53 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct		s_data
 {
 	struct s_str	chunk;
 	struct s_str	format;
+	struct s_str	res;
 	int				option[8];
 }					t_data;
 
@@ -42,6 +43,7 @@ t_str				ft_apply(t_str res, int opt[8], char spec);
 t_str				ft_applyint(t_str res, int opt[8], char spec);
 size_t				ft_getsize(t_str chunk);
 void				ft_parse_flag(t_data *data, va_list ap);
+char				**ft_unicconv(int i, wchar_t c);
 
 int					ft_printf(const char *format, ...);
 
