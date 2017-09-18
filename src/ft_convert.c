@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 18:46:59 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 19:18:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 
 char	*ft_convert_integer(uintmax_t n, char specifier)
 {
+	if (specifier == 'b')
+		return (ft_uimaxtoa(n, 2));
 	if (ft_strchr("uU", specifier))
 		return (ft_uimaxtoa(n, 10));
 	else if (ft_strchr("pxX", specifier))
@@ -137,7 +139,7 @@ void	ft_norme_prefix(t_str *res, int opt[8], char spec, int sign)
 {
 	char	*tmp;
 
-	tmp = "0x";
+	tmp = (spec == 'b') ? "0b" : "0x";
 	if ((spec == 'o' || spec == 'O') && (sign || !opt[PREC]))
 	{
 		if (res->len < (size_t)opt[PREC] && opt[PREC] != -1)
@@ -185,7 +187,7 @@ t_str	ft_applyint(t_str res, int opt[8], char spec)
 		ft_strdel(&(res.str));
 		res.str = ft_strnew(0);
 	}
-	if (spec == 'p' || (opt[HASH] && ft_strchr("oOxX", spec)))
+	if (spec == 'p' || (opt[HASH] && ft_strchr("boOxX", spec)))
 		ft_norme_prefix(&res, opt, spec, sign);
 	if (res.len - (sign < 0) < (size_t)opt[PREC] && opt[PREC] != -1)
 		ft_norme_prec(&res, opt, sign);

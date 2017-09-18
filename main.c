@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/21 16:09:31 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 18:57:29 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 19:21:39 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,18 @@ int		main(void)
 	ft_printf("%s%s\n", "test", "test");
 	ft_printf("%s%s%s\n", "test", "test", "test");
 	ft_printf("%C\n", 15000);
-*/	ft_printf("1 : -->%C<--\n", 15000);
+	ft_printf("1 : -->%C<--\n", 15000);
 	printf("2 : -->%C<--\n", 15000);
 //	getchar();
+*/	ft_printf("%b\n", 42);
+	ft_printf("%b\n", 69);
+	ft_printf("%b\n", 400);
+	ft_printf("%b\n", -10);
+	ft_printf("%lb\n", 5464561);
+	ft_printf("%#b\n", 42);
+	ft_printf("%#b\n", 69);
+	ft_printf("%#b\n", 400);
+	ft_printf("%#b\n", -10);
+	ft_printf("%#lb\n", 5464561);
 	return (0);
 }
