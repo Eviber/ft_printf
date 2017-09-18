@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 00:00:10 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 18:46:59 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 ** un meilleur code
 */
 
+#include <stdio.h>
 t_str	ft_unic(wchar_t unicstr[], int justonce, int prec)
 {
 	int		i;
@@ -33,8 +34,12 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec)
 	{
 		c = *unicstr;
 		i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
-		if (i + 1 > MB_CUR_MAX && !(res.str = NULL) && !(res.len = 0))
+		if (i + 1 > MB_CUR_MAX)
+		{
+			ft_strdel(&(res.str));
+			ft_strdel(&str);
 			return (res);
+		}
 		if (prec != -1 && i + 1 > prec)
 			break ;
 		prec -= (prec == -1) ? 0 :  i + 1;
@@ -50,6 +55,7 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec)
 		unicstr++;
 	}
 	res.len = (justonce) ? i + 1 : ft_strlen(res.str);
+	ft_strdel(&str);
 	return (res);
 }
 
@@ -75,7 +81,7 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 			res.str = ft_strdup(res.str);
 		else
 			res = ft_unic((wchar_t *)res.str, 0, prec);
-		res.len = ft_strlen(res.str);
+		res.len = (res.str) ? ft_strlen(res.str) : 0;
 	}
 	return (res);
 }
@@ -127,7 +133,6 @@ t_str	ft_convert(t_data data, va_list ap, size_t size, int prec)
 	return (res);
 }
 
-#include <stdio.h>
 void	ft_norme_prefix(t_str *res, int opt[8], char spec, int sign)
 {
 	char	*tmp;
@@ -207,11 +212,12 @@ t_str	ft_norme_width(t_str res, int opt[8], char spec)
 		res = ft_chunkappend(res, space, 'F');
 	else if (space.str[0] == '0' && space.len)
 	{
-		res.str = ft_strinsert(&(space.str), &(res.str), opt[PREFIX], 'F');
+		res.str = ft_strinsert(&(space.str), &(res.str), opt[PREFIX], 'S');
 		res.len += space.len;
 	}
 	else if (space.len)
-		res = ft_chunkappend(space, res, 'F');
+		res = ft_chunkappend(space, res, 'S');
+	ft_strdel(&(space.str));
 	return (res);
 }
 

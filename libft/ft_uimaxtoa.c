@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 03:12:07 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/10 03:17:51 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 17:25:09 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static char	*ft_addchar(char c, char **str, char where)
 	buf = ft_strnew(1);
 	buf[0] = c;
 	if (where == 'B')
-		buf = ft_strappend(&buf, str, 'S');
+		buf = ft_strappend(&buf, str, 'B');
 	else
-		buf = ft_strappend(str, &buf, 'F');
+		buf = ft_strappend(str, &buf, 'B');
 	return (buf);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/31 18:09:19 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/17 21:27:57 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/18 18:44:31 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "../libft/libft.h"
 #include "../include/ft_printf.h"
 
+#   include <stdio.h>
 t_str	ft_chunkappend(t_str s1, t_str s2, char c)
 {
 	t_str	res;
@@ -110,5 +111,6 @@ int		ft_printf(const char *format, ...)
 	va_end(ap);
 	if (res.str && !error)
 		write(1, res.str, res.len);
+	ft_strdel(&(res.str));
 	return ((error) ? -1 : res.len);
 }
