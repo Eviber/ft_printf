@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_convert.c                                       :+:      :+:    :+:   */
+/*   ft_prconvert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 23:02:25 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/19 18:48:52 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/libft.h"
 #include "../include/ft_printf.h"
 
-t_str	ft_unic(wchar_t unicstr[], int justonce, int prec)
+t_str	ft_unic(wchar_t unicstr[], int justonce, int prec, char **str)
 {
 	int		i;
 	t_str	res;
@@ -33,7 +33,7 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec)
 		if (prec != -1 && i + 1 > prec)
 			break ;
 		prec -= (prec == -1) ? 0 : i + 1;
-		res.str = ft_strappend(&(res.str), ft_unicconv(i, c), 'B');
+		res.str = ft_strappend(&(res.str), ft_unicconv(str, i, c), 'B');
 		if (justonce)
 			break ;
 		unicstr++;
@@ -46,13 +46,14 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 {
 	t_str	res;
 	wchar_t	tmp;
+	char	*str;
 
 	if (spec == 'c' && size < sizeof(long) * 8 && (res.len = 1))
 		res.str = ft_memset(ft_strnew(1), (char)va_arg(ap, int), 1);
 	else if (spec == 'c' || spec == 'C')
 	{
 		tmp = va_arg(ap, wchar_t);
-		res = ft_unic(&tmp, 1, prec);
+		res = ft_unic(&tmp, 1, prec, &str);
 	}
 	else
 	{
@@ -63,7 +64,7 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 		else if (spec == 's' && size < sizeof(long) * 8)
 			res.str = ft_strdup(res.str);
 		else
-			res = ft_unic((wchar_t *)res.str, 0, prec);
+			res = ft_unic((wchar_t *)res.str, 0, prec, &str);
 		res.len = (res.str) ? ft_strlen(res.str) : 0;
 	}
 	return (res);

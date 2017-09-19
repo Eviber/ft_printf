@@ -6,19 +6,15 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/07 04:04:09 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/18 22:48:12 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/09/19 18:36:16 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ft_printf.h"
 #include "../libft/libft.h"
 
-char	**ft_unicconv(int i, wchar_t c)
+char	**ft_unicconv(char **str, int i, wchar_t c)
 {
-	char	**str;
-
-	if (!(str = (char **)ft_memalloc(sizeof(char *))))
-		return (NULL);
 	if (!(*str = ft_strnew(4)))
 		return (NULL);
 	(*str)[3] = (i == 3) ? (char)((c & 0x3F) | 0x80) : '\0';
