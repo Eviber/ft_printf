@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/19 18:48:52 by ygaude           ###   ########.fr       */
+/*   Updated: 2017/12/09 23:59:33 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec, char **str)
 	while (*unicstr || justonce)
 	{
 		c = *unicstr;
-		i = (c >= 0x80) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
+		i = (c > 0xFF) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
 		if (i + 1 > MB_CUR_MAX)
 		{
 			ft_strdel(&(res.str));
