@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/05 20:05:45 by ygaude            #+#    #+#             */
-/*   Updated: 2017/12/09 23:59:33 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/02/08 19:02:10 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_str	ft_unic(wchar_t unicstr[], int justonce, int prec, char **str)
 	while (*unicstr || justonce)
 	{
 		c = *unicstr;
-		i = (c > 0xFF) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
-		if (i + 1 > MB_CUR_MAX)
+		i = (c > 0x7F) + (c >= 0x800) + (c >= 0x10000) + (c >= 0x110000);
+		if ((i = (c <= 0xFF && MB_CUR_MAX == 1) ? 0 : i) + 1 > MB_CUR_MAX)
 		{
 			ft_strdel(&(res.str));
 			return (res);
@@ -48,7 +48,7 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 	wchar_t	tmp;
 	char	*str;
 
-	if (spec == 'c' && size < sizeof(long) * 8 && (res.len = 1))
+	if (spec == 'c' && size < sizeof(long) * 8)
 		res.str = ft_memset(ft_strnew(1), (char)va_arg(ap, int), 1);
 	else if (spec == 'c' || spec == 'C')
 	{
@@ -57,16 +57,16 @@ t_str	ft_getstring(char spec, va_list ap, size_t size, int prec)
 	}
 	else
 	{
-		res.str = (spec == 's' && size < sizeof(long) * 8) ?
-			(char *)va_arg(ap, char *) : (char *)va_arg(ap, wchar_t *);
+		res.str = (char *)va_arg(ap, char *);
 		if (!res.str)
 			res.str = ft_strdup("(null)");
 		else if (spec == 's' && size < sizeof(long) * 8)
 			res.str = ft_strdup(res.str);
 		else
 			res = ft_unic((wchar_t *)res.str, 0, prec, &str);
-		res.len = (res.str) ? ft_strlen(res.str) : 0;
 	}
+	res.len = (res.str) ? ft_strlen(res.str) : 0;
+	res.len += (!res.len && (spec == 'c' || spec == 'C'));
 	return (res);
 }
 
