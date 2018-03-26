@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2017/09/19 18:36:58 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/26 20:52:18 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,35 +20,25 @@
 # define SPECIFIER "sSpbdDioOuUxXcC"
 # define FLAG "1234567890#-+ .lhjz*"
 
-enum { HASH, PLUS, MINUS, SPACE, ZERO, WIDTH, PREC, PREFIX };
-
-typedef struct		s_str
+enum
 {
-	char			*str;
-	size_t			len;
-}					t_str;
+	HASH = 1,
+	PLUS = 2,
+	MINUS = 4,
+	SPACE = 8,
+	ZERO = 16
+};
 
-typedef struct		s_data
+typedef struct		s_arg
 {
-	struct s_str	chunk;
-	struct s_str	format;
-	struct s_str	res;
-	int				option[8];
-}					t_data;
-
-t_str				ft_chunkappend(t_str s1, t_str s2, char c);
-
-t_str				ft_convert(t_data data, va_list ap, size_t size, int prec);
-t_str				ft_apply(t_str res, int opt[8], char spec);
-t_str				ft_applyint(t_str res, int opt[8], char spec);
-size_t				ft_getsize(t_str chunk);
-void				ft_parse_flag(t_data *data, va_list ap);
-char				**ft_unicconv(char **str, int i, wchar_t c);
-t_str				ft_loop(t_str fmt, va_list ap, int *error);
-
-int					ft_printf(const char *format, ...);
-int					ft_dprintf(int fd, const char *format, ...);
-int					ft_asprintf(char **ret, const char *format, ...);
-int					ft_vasprintf(char **ret, const char *format, va_list ap);
+	char			*prefix;
+	int				pref_len;
+	int				width;
+	int				eff_w;
+	int				eff_p;
+	int				prec;
+	char			flags;
+	struct s_arg	*next;
+}					t_arg;
 
 #endif
