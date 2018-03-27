@@ -6,7 +6,7 @@
 /*   By: ygaude <ygaude@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/17 02:09:51 by ygaude            #+#    #+#             */
-/*   Updated: 2018/03/26 20:52:18 by ygaude           ###   ########.fr       */
+/*   Updated: 2018/03/27 21:05:26 by ygaude           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,30 @@ enum
 	ZERO = 16
 };
 
+enum
+{
+	CHAR = 1,
+	SHORT = 2,
+	LONG = 4
+};
+
 typedef struct		s_arg
 {
+	struct s_arg	*next;
 	char			*prefix;
+	size_t			nsize;
 	int				pref_len;
-	int				width;
 	int				eff_w;
 	int				eff_p;
 	int				prec;
-	char			flags;
-	struct s_arg	*next;
 }					t_arg;
+
+typedef struct		s_parsinfo
+{
+	int				width;
+	int				prec;
+	char			length;
+	char			flags;
+}					t_parsinfo;
 
 #endif
